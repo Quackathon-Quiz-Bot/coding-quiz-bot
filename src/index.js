@@ -1,5 +1,5 @@
 require("dotenv").config();
-const htmlQuestions = require("../data/quizQuestions");
+const {htmlQuestions, cssQuestions, javascriptQuestions} = require("../data/quizQuestions");
 const {
   Client,
   IntentsBitField,
@@ -79,7 +79,7 @@ client.on("messageCreate", (message) => {
         console.log(typeof language, "typeof"); //remove later
         // The selected language will be in the values array
         // Do something with the selected language
-        console.log(genQuiz(language))
+        genQuiz(language)
       });
 
       collector.on("end", (collected) => {
@@ -92,23 +92,25 @@ client.on("messageCreate", (message) => {
     openLanguageSelect();
 
     async function genQuiz(option) {
-      console.log(option, "this should show html");
-      console.log(htmlQuestions, "should be all of the array html");
       if (option == "htmlQuestions") {
         const randomIndex = Math.floor(Math.random() * htmlQuestions.length);
+        console.log(randomIndex, "index")
         const question = await htmlQuestions[randomIndex];
+        console.log(question, "question for HTML")
         return question
       }
       if (option == "javascriptQuestions") {
         const randomIndex = Math.floor(
           Math.random() * javascriptQuestions.length)
           const question = await javascriptQuestions[randomIndex];
+          console.log(question, "question for JS")
           return question
         ;
       }
       if (option == "cssQuestions") {
         const randomIndex = Math.floor(Math.random() * cssQuestions.length);
         const question = await cssQuestions[randomIndex];
+        console.log(question, "question for css")
         return question
       }
 
