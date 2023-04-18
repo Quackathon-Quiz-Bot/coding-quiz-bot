@@ -46,7 +46,7 @@ client.on('interactionCreate', (interaction) => {
 /* //////////////////////////////// */
 /* ///////   SIGNED NL    ///////// */
 
-client.on('message', message => {
+client.on('messageCreate', (message) => {
  // Ignore messages from bots
     if (message.author.bot) return;
 
