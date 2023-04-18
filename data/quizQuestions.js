@@ -30,7 +30,7 @@ javascriptQuestions = [
   { question: "", correctAnswer: "", allAnswers: ["", "", "", ""] },
 ];
 
-module.export = {
+module.exports = {
   htmlQuestions,
   cssQuestions,
   javascriptQuestions,
