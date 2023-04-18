@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { Client, IntentsBitField } = require('discord.js')
-const questions = require('../questions.json')
+const questions = require('../questions.json').questions
 
 const client = new Client({
     intents: [
@@ -16,17 +16,17 @@ client.on('ready', (c) => {
 })
 
 
-client.on('interactionCreate', (interaction) => {
-    if (!interaction.isChatInputCommand()) {
-        return
-    }
+// client.on('interactionCreate', (interaction) => {
+//     if (!interaction.isChatInputCommand()) {
+//         return
+//     }
 
-    console.log(interaction.commandName)
+//     console.log(interaction.commandName)
 
-    if(interaction.commandName === 'quiz-question'){
-        interaction.reply("Generating a new question...")
-    }
-})
+//     if(interaction.commandName === 'quiz-question'){
+//         interaction.reply("Generating a new question...")
+//     }
+// })
 
 
 
@@ -51,19 +51,17 @@ client.on('messageCreate', (message) => {
     if (message.author.bot) return;
 
     //Check if message starts with the prefix
-    console.log(message.content)
     if (message.content.startsWith('!question')){
         message.channel.send("Generating a new question...")
         // Get ranom question from questions.json
         // Send question to channel
+
         const randomIdx = Math.floor(Math.random() * questions.length)
         const question = questions[randomIdx]
         console.log(question)
 
         message.channel.send(`Question:\n${question.name}\n\n${question.description}`)
     }
-
-
 })
 
 client.login(process.env.TOKEN);
