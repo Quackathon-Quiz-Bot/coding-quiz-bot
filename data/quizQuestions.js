@@ -8,13 +8,16 @@ htmlQuestions = [
       "Hypertext Markup Language",
       "Hyper Markup Language",
     ],
+  },
+  {
     question: "What is the purpose of the <!DOCTYPE> declaration in HTML?",
-    correctAnswer: "The <!DOCTYPE> declaration in HTML specifies the document type and version of HTML being used",
+    correctAnswer:
+      "The <!DOCTYPE> declaration in HTML specifies the document type and version of HTML being used",
     allAnswers: [
       "The <!DOCTYPE> declaration in HTML specifies the color scheme of the web page",
       "The <!DOCTYPE> declaration in HTML specifies the programming language used to create the web page",
       "The <!DOCTYPE> declaration in HTML is not necessary and can be omitted",
-      "The <!DOCTYPE> declaration in HTML specifies the document type and version of HTML being used"
+      "The <!DOCTYPE> declaration in HTML specifies the document type and version of HTML being used",
     ],
   },
 ];
