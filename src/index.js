@@ -11,6 +11,9 @@ const {
   InteractionResponse,
 } = require("discord.js");
 const questions = require("../questions.json").questions;
+const acorn = require("acorn");
+const evaluateSolution = require("./evaluateSolution");
+const { spawn } = require("child_process");
 
 const client = new Client({
   intents: [
@@ -147,6 +150,78 @@ client.on("messageCreate", (message) => {
       `Question:\n${question.name}\n\n${question.description}`
     );
   }
+
+  //Checking code for errors logic
+  if (message.content.startsWith("!check")){
+    message.channel.send("Running your code...");
+    
+    const code = message.content.slice(7).trim();
+
+    if (code.startsWith('function')){
+        //Wrap code in a self executing function
+        const script = `(() => { ${code} })();`
+        // Execute the script in a separate process
+
+
+        executeCode(codeToExecute)
+        .then((output) => {
+            message.channel.send('Output:\n```\n' + output + '\n```')
+            console.log(output, 'output')
+        })
+        .catch((error) => {
+            message.channel.send('Error:\n```\n' + error.message + '\n```')
+        })
+    } else {
+        //Executre the code as is in a separate process
+        executeCode(code)
+        .then((output) => {
+            message.channel.send('Output:\n```\n' + output + '\n```')
+        })
+        .catch((error) => {
+            message.channel.send('Error:\n```\n' + error.message + '\n```')
+        })
+
+
+    }
+    
+
+  }
+
 });
+
+
+const executeCode = (code) => {
+    return new Promise((resolve, reject) => {
+        //Spawn a new Node.js process
+        const childProcess = spawn('node', ['-e', code]);
+        console.log(childProcess, 'childProcess')
+        console.log(code, 'code')
+
+        let stdout = '';
+        let stderr = '';
+
+        //Capture stdout and stderr output from the child process
+        childProcess.stdout.on('data', (data) => {
+            stdout += data.toString();
+    })
+
+    childProcess.stderr.on('data', (data) => {
+        stderr += data.toString();
+    })
+
+    //handle process exit
+    childProcess.on('exit', (code) => {
+        if (code === 0) {
+            resolve(stdout);
+        } else {
+            reject(new Error(`Child process exited with code ${code}. Stderr: ${stderr}`));
+        }
+    })
+
+    }   
+
+)}
+
+
 
 client.login(process.env.TOKEN);
