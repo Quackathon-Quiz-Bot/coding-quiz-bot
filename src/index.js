@@ -11,7 +11,6 @@ const {
   InteractionResponse,
 } = require("discord.js");
 const questions = require("../questions.json").questions;
-const acorn = require("acorn");
 const evaluateSolution = require("./evaluateSolution");
 const { spawn } = require("child_process");
 
@@ -163,7 +162,7 @@ client.on("messageCreate", (message) => {
         // Execute the script in a separate process
 
 
-        executeCode(codeToExecute)
+        executeCode(script)
         .then((output) => {
             message.channel.send('Output:\n```\n' + output + '\n```')
             console.log(output, 'output')
