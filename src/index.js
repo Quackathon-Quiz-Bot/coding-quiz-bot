@@ -47,7 +47,7 @@ client.on("ready", (c) => {
 // })
 
 client.on("messageCreate", (message) => {
-    let quizQuestion
+  let quizQuestion;
 
   // Ignore messages from bots
   if (message.author.bot) return;
@@ -126,52 +126,44 @@ client.on("messageCreate", (message) => {
         quizQuestion = await javascriptQuestions[randomIndex];
         console.log(quizQuestion);
       }
-      openQuestionMenu(interaction)
-
+      openQuestionMenu(interaction);
     }
 
-    //Defining the menu for the quiz question and answers
+    //Defining the buttons for the quiz answers
 
-    // const answerChoices = new StringSelectMenuBuilder()
-    //   .setCustomId("answerSelector")
-    // .addOptions(        
-        const choice1 = new ButtonBuilder()
-        .setCustomId('1')
-          .setLabel(`AnswerChoice1`)
-          .setStyle(ButtonStyle.Secondary);
-         const choice2 = new ButtonBuilder()
-          .setCustomId('2')
-          .setLabel(`AnswerChoice1`)
-          .setStyle(ButtonStyle.Secondary);
-         const choice3 = new ButtonBuilder()
-          .setCustomId('3')
-          .setLabel(`AnswerChoice1`)
-          .setStyle(ButtonStyle.Secondary);
-        const choice4 = new ButtonBuilder()
-          .setCustomId('4')
-          .setLabel(`AnswerChoice1`)
-          .setStyle(ButtonStyle.Secondary);
-        // );
+    const choice1 = new ButtonBuilder()
+      .setCustomId("1")
+      .setLabel(`AnswerChoice1`)
+      .setStyle(ButtonStyle.Secondary);
+    const choice2 = new ButtonBuilder()
+      .setCustomId("2")
+      .setLabel(`AnswerChoice1`)
+      .setStyle(ButtonStyle.Secondary);
+    const choice3 = new ButtonBuilder()
+      .setCustomId("3")
+      .setLabel(`AnswerChoice1`)
+      .setStyle(ButtonStyle.Secondary);
+    const choice4 = new ButtonBuilder()
+      .setCustomId("4")
+      .setLabel(`AnswerChoice1`)
+      .setStyle(ButtonStyle.Secondary);
 
-      
-
-        const answerChoices = new ActionRowBuilder().addComponents(choice1, choice2, choice3, choice4);
-
+    const answerChoices = new ActionRowBuilder().addComponents(
+      choice1,
+      choice2,
+      choice3,
+      choice4
+    );
 
     //Function for sending the message to the discord channel.
-    async function openQuestionMenu (interaction) {
-        await interaction.reply({
-            content: "Here is your question!",
-            content: `${quizQuestion.question}`,
-            // content: embeddedQuestion
-            components: [answerChoices],
-          });
+    async function openQuestionMenu(interaction) {
+      await interaction.reply({
+        content: `${quizQuestion.question}`,
+        components: [answerChoices],
+      });
     }
-
   }
 });
-
-
 
 /* ///////////////////////////////  */
 /* //      EXPERIMENTAL CODE    //  */
