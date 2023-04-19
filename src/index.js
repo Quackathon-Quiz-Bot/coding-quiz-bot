@@ -1,6 +1,10 @@
 require("dotenv").config();
 // When adding a new question set, add it to the imports below.
-const {htmlQuestions, cssQuestions, javascriptQuestions} = require("../data/quizQuestions");
+const {
+  htmlQuestions,
+  cssQuestions,
+  javascriptQuestions,
+} = require("../data/quizQuestions");
 const {
   Client,
   IntentsBitField,
@@ -26,7 +30,7 @@ client.on("ready", (c) => {
   console.log(`Quiz-bot, ${c.user.tag}, is ready to test your skills!`);
 });
 
-// This can probably be deleted if we are not going to use the slash commands. 
+// This can probably be deleted if we are not going to use the slash commands.
 // client.on('interactionCreate', (interaction) => {
 //     if (!interaction.isChatInputCommand()) {
 //         return
@@ -40,34 +44,33 @@ client.on("ready", (c) => {
 // })
 
 client.on("messageCreate", (message) => {
-    // Ignore messages from bots
-    if (message.author.bot) return;
-    
-    //Check if message starts with the prefix
-    if (message.content.startsWith("!quiz")) {
-        message.channel.send("Generating a new quiz question...");
-        openLanguageSelect(); //Calling the function to generate the language selection menu.
+  // Ignore messages from bots
+  if (message.author.bot) return;
 
+  //Check if message starts with the prefix
+  if (message.content.startsWith("!quiz")) {
+    message.channel.send("Generating a new quiz question...");
 
-
-        //Defining the menu for selecting a language
-        //If adding a set of questions for another language here is where you will add the option for it in the language selection menu.
-        const select = new StringSelectMenuBuilder()
-        .setCustomId("languageSelector")
-        .setPlaceholder("What language would you like to be quizzed on?")
-        .addOptions(
-            new StringSelectMenuOptionBuilder()
-            .setLabel("HTML")
-            .setValue("htmlQuestions"),
-            new StringSelectMenuOptionBuilder()
-            .setLabel("CSS")
-            .setValue("cssQuestions"),
-            new StringSelectMenuOptionBuilder()
-            .setLabel("JavaScript")
-            .setValue("javascriptQuestions")
-            );
+    //Defining the menu for selecting a language
+    //If adding a set of questions for another language here is where you will add the option for it in the language selection menu.
+    const select = new StringSelectMenuBuilder()
+      .setCustomId("languageSelector")
+      .setPlaceholder("Languages")
+      .addOptions(
+        new StringSelectMenuOptionBuilder()
+          .setLabel("HTML")
+          .setValue("htmlQuestions"),
+        new StringSelectMenuOptionBuilder()
+          .setLabel("CSS")
+          .setValue("cssQuestions"),
+        new StringSelectMenuOptionBuilder()
+          .setLabel("JavaScript")
+          .setValue("javascriptQuestions")
+      );
 
     const row = new ActionRowBuilder().addComponents(select);
+
+    openLanguageSelect(); //Calling the function to generate the language selection menu.
 
     //This is the function that generates the language selection menu.
     async function openLanguageSelect() {
@@ -80,12 +83,12 @@ client.on("messageCreate", (message) => {
       });
 
       collector.on("collect", (interaction) => {
-        const language = interaction.values[0];   // The selected language will be the only entry in the values array at index [0]
+        const language = interaction.values[0]; // The selected language will be the only entry in the values array at index [0]
 
-        generateQuestion(language) //Calls on the function to generate a quiz question based on the language selected.
+        generateQuestion(language); //Calls on the function to generate a quiz question based on the language selected.
       });
 
-      //After 30 seconds, if a language isn't selected the request times out. 
+      //After 30 seconds, if a language isn't selected the request times out.
       collector.on("end", (collected) => {
         if (collected.size === 0) {
           message.reply("Request timed out...");
@@ -94,34 +97,29 @@ client.on("messageCreate", (message) => {
     }
 
     // This is the function that generates the quiz question based on the language that's fed in as a parameter.
-    // When adding a new language, add an if statement to direct the function to the right question set. 
+    // When adding a new language, add an if statement to direct the function to the right question set.
     async function generateQuestion(option) {
-
-        //HTML
+      //HTML
       if (option == "htmlQuestions") {
         const randomIndex = Math.floor(Math.random() * htmlQuestions.length);
-        console.log(randomIndex, "index")
         const question = await htmlQuestions[randomIndex];
-        console.log(question, "question for HTML")
-        return question
+        console.log(question);
       }
 
-     //CSS
+      //CSS
       if (option == "cssQuestions") {
         const randomIndex = Math.floor(Math.random() * cssQuestions.length);
         const question = await cssQuestions[randomIndex];
-        console.log(question, "question for css")
-        return question
+        console.log(question);
       }
 
       //JavaScript
       if (option == "javascriptQuestions") {
         const randomIndex = Math.floor(
-          Math.random() * javascriptQuestions.length)
-          const question = await javascriptQuestions[randomIndex];
-          console.log(question, "question for JS")
-          return question
-        ;
+          Math.random() * javascriptQuestions.length
+        );
+        const question = await javascriptQuestions[randomIndex];
+        console.log(question);
       }
     }
   }
