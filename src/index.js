@@ -47,7 +47,7 @@ client.on("ready", (c) => {
 // })
 
 client.on("messageCreate", (message) => {
-  let quizQuestion;
+    let quizQuestion;
 
   // Ignore messages from bots
   if (message.author.bot) return;
@@ -79,6 +79,7 @@ client.on("messageCreate", (message) => {
 
     //This is the function that generates the language selection menu.
     async function openLanguageSelect() {
+
       await message.reply({
         content: "What language would you like a question about?",
         components: [row],
@@ -104,6 +105,7 @@ client.on("messageCreate", (message) => {
     // This is the function that generates the quiz question based on the language that's fed in as a parameter.
     // When adding a new language, add an if statement to direct the function to the right question set.
     async function generateQuestion(option, interaction) {
+
       //HTML
       if (option == "htmlQuestions") {
         const randomIndex = Math.floor(Math.random() * htmlQuestions.length);
@@ -126,26 +128,42 @@ client.on("messageCreate", (message) => {
         quizQuestion = await javascriptQuestions[randomIndex];
         console.log(quizQuestion);
       }
-      openQuestionMenu(interaction);
+    // const randomIndex = Math.floor(Math.random() * option.length);
+    //     quizQuestion = await option[randomIndex];
+    //     console.log(quizQuestion, "line 110");
+      openQuestionMenu(interaction, quizQuestion);
     }
 
     //Defining the buttons for the quiz answers
 
-    const choice1 = new ButtonBuilder()
+    function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+      }
+
+    //Function for sending the message to the discord channel.
+    async function openQuestionMenu(interaction, quizQuestion) {
+        const shuffledAnswers = shuffleArray([...quizQuestion.allAnswers, quizQuestion.correctAnswer]);
+        console.log(shuffledAnswers)
+        const choice1 = new ButtonBuilder()
       .setCustomId("1")
-      .setLabel(`AnswerChoice1`)
+      .setLabel(`${shuffledAnswers[0]}`)
       .setStyle(ButtonStyle.Secondary);
     const choice2 = new ButtonBuilder()
       .setCustomId("2")
-      .setLabel(`AnswerChoice1`)
+      .setLabel(`${shuffledAnswers[1]}`)
       .setStyle(ButtonStyle.Secondary);
     const choice3 = new ButtonBuilder()
       .setCustomId("3")
-      .setLabel(`AnswerChoice1`)
+      .setLabel(`${shuffledAnswers[2]}`)
       .setStyle(ButtonStyle.Secondary);
     const choice4 = new ButtonBuilder()
       .setCustomId("4")
-      .setLabel(`AnswerChoice1`)
+      .setLabel(`${shuffledAnswers[3]}`)
       .setStyle(ButtonStyle.Secondary);
 
     const answerChoices = new ActionRowBuilder().addComponents(
@@ -154,9 +172,7 @@ client.on("messageCreate", (message) => {
       choice3,
       choice4
     );
-
-    //Function for sending the message to the discord channel.
-    async function openQuestionMenu(interaction) {
+        console.log(quizQuestion, "is it here?")
       await interaction.reply({
         content: `${quizQuestion.question}`,
         components: [answerChoices],

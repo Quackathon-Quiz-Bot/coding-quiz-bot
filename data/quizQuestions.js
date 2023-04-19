@@ -1,5 +1,5 @@
 // Enter new question sets as an array of objects, each object representing a question.
-// Each question object should have 3 key value pairs. 
+// Each question object should have 3 key value pairs.
 // {
 // question: "A string"
 // correctAnswer: "A string"
@@ -13,21 +13,19 @@ htmlQuestions = [
     question: "What does HTML stand for?",
     correctAnswer: "Hypertext Markup Language",
     allAnswers: [
-      "Hypertext Makeup Language",
       "HTML Markup Language",
-      "Hypertext Markup Language",
+      "Hardcode Markup Language",
       "Hyper Markup Language",
     ],
   },
   {
     question: "What is the purpose of the <!DOCTYPE> declaration in HTML?",
     correctAnswer:
-      "The <!DOCTYPE> declaration in HTML specifies the document type and version of HTML being used",
+      "<!DOCTYPE> declaration in HTML specifies document type and version of HTML",
     allAnswers: [
-      "The <!DOCTYPE> declaration in HTML specifies the color scheme of the web page",
-      "The <!DOCTYPE> declaration in HTML specifies the programming language used to create the web page",
-      "The <!DOCTYPE> declaration in HTML is not necessary and can be omitted",
-      "The <!DOCTYPE> declaration in HTML specifies the document type and version of HTML being used",
+      "<!DOCTYPE> programming language in HTML specifies webpage creation",
+      "<!DOCTYPE> declaration in HTML is not necessary and can be omitted",
+      "<!DOCTYPE> declaration in HTML sets the background color of the web page",
     ],
   },
 ];
