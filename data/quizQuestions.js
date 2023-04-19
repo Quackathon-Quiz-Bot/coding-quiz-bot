@@ -31,11 +31,16 @@ htmlQuestions = [
 ];
 
 cssQuestions = [
-  { question: "", correctAnswer: "", allAnswers: ["", "", "", ""] },
+  { question: "", correctAnswer: "", allAnswers: ["", "", ""] },
 ];
 
 javascriptQuestions = [
-  { question: "", correctAnswer: "", allAnswers: ["", "", "", ""] },
+  { question: "How do you write a standard for loop?",
+  correctAnswer: "for (let i = 0; i < variable.length; i++) {}",
+   allAnswers: [
+    "for{let i=0; i>variable.length; i++}()",
+    "for(let i=0, i<variable.length, i++){}",
+    "for{const i=0: i<variable.length: i++}()"] },
 ];
 
 module.exports = {
