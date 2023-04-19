@@ -14,6 +14,9 @@ const {
   StringSelectMenuOptionBuilder,
   SlashCommandBuilder,
   InteractionResponse,
+  EmbedBuilder,
+  ButtonBuilder,
+  ButtonStyle,
 } = require("discord.js");
 const questions = require("../questions.json").questions;
 
@@ -44,6 +47,8 @@ client.on("ready", (c) => {
 // })
 
 client.on("messageCreate", (message) => {
+    let quizQuestion
+
   // Ignore messages from bots
   if (message.author.bot) return;
 
@@ -85,7 +90,7 @@ client.on("messageCreate", (message) => {
       collector.on("collect", (interaction) => {
         const language = interaction.values[0]; // The selected language will be the only entry in the values array at index [0]
 
-        generateQuestion(language); //Calls on the function to generate a quiz question based on the language selected.
+        generateQuestion(language, interaction); //Calls on the function to generate a quiz question based on the language selected.
       });
 
       //After 30 seconds, if a language isn't selected the request times out.
@@ -98,19 +103,19 @@ client.on("messageCreate", (message) => {
 
     // This is the function that generates the quiz question based on the language that's fed in as a parameter.
     // When adding a new language, add an if statement to direct the function to the right question set.
-    async function generateQuestion(option) {
+    async function generateQuestion(option, interaction) {
       //HTML
       if (option == "htmlQuestions") {
         const randomIndex = Math.floor(Math.random() * htmlQuestions.length);
-        const question = await htmlQuestions[randomIndex];
-        console.log(question);
+        quizQuestion = await htmlQuestions[randomIndex];
+        console.log(quizQuestion, "line 110");
       }
 
       //CSS
       if (option == "cssQuestions") {
         const randomIndex = Math.floor(Math.random() * cssQuestions.length);
-        const question = await cssQuestions[randomIndex];
-        console.log(question);
+        quizQuestion = await cssQuestions[randomIndex];
+        console.log(quizQuestion);
       }
 
       //JavaScript
@@ -118,12 +123,55 @@ client.on("messageCreate", (message) => {
         const randomIndex = Math.floor(
           Math.random() * javascriptQuestions.length
         );
-        const question = await javascriptQuestions[randomIndex];
-        console.log(question);
+        quizQuestion = await javascriptQuestions[randomIndex];
+        console.log(quizQuestion);
       }
+      openQuestionMenu(interaction)
+
     }
+
+    //Defining the menu for the quiz question and answers
+
+    // const answerChoices = new StringSelectMenuBuilder()
+    //   .setCustomId("answerSelector")
+    // .addOptions(        
+        const choice1 = new ButtonBuilder()
+        .setCustomId('1')
+          .setLabel(`AnswerChoice1`)
+          .setStyle(ButtonStyle.Secondary);
+         const choice2 = new ButtonBuilder()
+          .setCustomId('2')
+          .setLabel(`AnswerChoice1`)
+          .setStyle(ButtonStyle.Secondary);
+         const choice3 = new ButtonBuilder()
+          .setCustomId('3')
+          .setLabel(`AnswerChoice1`)
+          .setStyle(ButtonStyle.Secondary);
+        const choice4 = new ButtonBuilder()
+          .setCustomId('4')
+          .setLabel(`AnswerChoice1`)
+          .setStyle(ButtonStyle.Secondary);
+        // );
+
+      
+
+        const answerChoices = new ActionRowBuilder().addComponents(choice1, choice2, choice3, choice4);
+
+
+    //Function for sending the message to the discord channel.
+    async function openQuestionMenu (interaction) {
+        await interaction.reply({
+            content: "Here is your question!",
+            content: `${quizQuestion.question}`,
+            // content: embeddedQuestion
+            components: [answerChoices],
+          });
+    }
+
   }
 });
+
+
 
 /* ///////////////////////////////  */
 /* //      EXPERIMENTAL CODE    //  */
