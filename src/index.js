@@ -1,10 +1,12 @@
 require("dotenv").config();
+
 // When adding a new question set, add it to the imports below.
 const {
   htmlQuestions,
   cssQuestions,
   javascriptQuestions,
 } = require("../data/quizQuestions");
+const { interviewQuestions } = require("../data/interviewQuestions");
 const {
   Client,
   IntentsBitField,
@@ -162,6 +164,60 @@ client.on("messageCreate", (message) => {
         components: [answerChoices],
       });
     }
+  }
+});
+
+/* ///////////////////////////////  */
+/* //     INTERVIEW QUESTIONS   //  */
+/* //////////////////////////////// */
+
+client.on("messageCreate", (message) => {
+  let interviewQuestions;
+
+  // Ignore messages from bots
+  if (message.author.bot) return;
+
+  //Check if message starts with the prefix !interview
+
+  if (message.content.startsWith("!interview")) {
+    message.channel.send("Generating an interview question...");
+    const randomIndex = Math.floor(Math.random() * interviewQuestions.length);
+    const selectedQuestion = interviewQuestions[randomIndex];
+    console.log(selectedQuestion);
+    openInterviewQuestions(message, selectedQuestion);
+  }
+
+  //Defining the buttons for the interview question answers
+  const choiceA = new ButtonBuilder()
+    .setCustomId("A")
+    .setLabel(`AnswerChoiceA`)
+    .setStyle(ButtonStyle.Secondary);
+  const choiceB = new ButtonBuilder()
+    .setCustomId("B")
+    .setLabel(`AnswerChoiceB`)
+    .setStyle(ButtonStyle.Secondary);
+  const choiceC = new ButtonBuilder()
+    .setCustomId("C")
+    .setLabel(`AnswerChoiceC`)
+    .setStyle(ButtonStyle.Secondary);
+  const choiceD = new ButtonBuilder()
+    .setCustomId("D")
+    .setLabel(`AnswerChoiceD`)
+    .setStyle(ButtonStyle.Secondary);
+
+  const interviewAnswerChoices = new ActionRowBuilder().addComponents(
+    choiceA,
+    choiceB,
+    choiceC,
+    choiceD
+  );
+
+  async function openInterviewQuestions(message, selectedQuestion) {
+    // Assuming `interaction` is available in the function
+    await message.reply({
+      content: `${selectedQuestion.question}`,
+      components: [interviewAnswerChoices],
+    });
   }
 });
 
