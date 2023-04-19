@@ -1,4 +1,5 @@
 require("dotenv").config();
+// When adding a new question set, add it to the imports below.
 const {htmlQuestions, cssQuestions, javascriptQuestions} = require("../data/quizQuestions");
 const {
   Client,
@@ -25,6 +26,7 @@ client.on("ready", (c) => {
   console.log(`Quiz-bot, ${c.user.tag}, is ready to test your skills!`);
 });
 
+// This can probably be deleted if we are not going to use the slash commands. 
 // client.on('interactionCreate', (interaction) => {
 //     if (!interaction.isChatInputCommand()) {
 //         return
