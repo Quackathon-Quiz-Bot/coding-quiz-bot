@@ -8,7 +8,24 @@
 // The correct answer should be included in all answers so the script can compare the answer the user chose to the correct answer value.
 // Add your question set to the module exports at the bottom of the file.
 
-interviewQuestions = [
+algorithmicQuestions = [
+  {
+    question: "What is an API?",
+    correctAnswer: "Application Programming Interface",
+    allAnswers: [
+      "Application Procedure Interface",
+      "Access Practical Internet",
+      "Application Programming Interaction",
+    ],
+  },
+  {
+    question: "What is the name for a function that calls itself?",
+    correctAnswer: "Recursive function",
+    allAnswers: ["Return", "Reserve function", "While Loop"],
+  },
+];
+
+dataStructureQuestions = [
   {
     question: "What is an API?",
     correctAnswer: "Application Programming Interface",
@@ -26,5 +43,6 @@ interviewQuestions = [
 ];
 
 module.exports = {
-  interviewQuestions,
+  dataStructureQuestions,
+  algorithmicQuestions,
 };
