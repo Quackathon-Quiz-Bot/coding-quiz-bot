@@ -10,19 +10,18 @@
 
 interviewQuestions = [
   {
-    question: "What is an API? How is it different from a web service?",
-    correctAnswer:
-      "An API (Application Programming Interface) is a set of protocols and tools for building software applications. A web service is a type of API that is accessed over the internet using standardized protocols such as HTTP. The main difference between an API and a web service is that an API can refer to any set of protocols for building software applications, while a web service specifically refers to an API that is accessed over the internet.",
+    question: "What is an API?",
+    correctAnswer: "Application Programming Interface",
     allAnswers: [
-      "Hypertext Makeup Language",
-      "HTML Markup Language",
-      "Hypertext Markup Language",
-      "Hyper Markup Language",
+      "Application Procedure Interface",
+      "Access Practical Internet",
+      "Application Programming Interaction",
     ],
   },
   {
     question: "What is the name for a function that calls itself?",
     correctAnswer: "Recursive function",
+    allAnswers: ["Return", "Reserve function", "While Loop"],
   },
 ];
 

@@ -191,7 +191,6 @@ client.on("messageCreate", (message) => {
   if (message.author.bot) return;
 
   //Check if message starts with the prefix !interview
-
   if (message.content.startsWith("!interview")) {
     message.channel.send("Generating an interview question...");
     const randomIndex = Math.floor(Math.random() * interviewQuestions.length);
@@ -199,6 +198,27 @@ client.on("messageCreate", (message) => {
     console.log(selectedQuestion);
     openInterviewQuestions(message, selectedQuestion);
   }
+
+  //Defining the menu for selecting a language
+  //If adding a set of questions for another language here is where you will add the option for it in the language selection menu.
+  const select = new StringSelectMenuBuilder()
+    .setCustomId("languageSelector")
+    .setPlaceholder("Languages")
+    .addOptions(
+      new StringSelectMenuOptionBuilder()
+        .setLabel("HTML")
+        .setValue("htmlQuestions"),
+      new StringSelectMenuOptionBuilder()
+        .setLabel("CSS")
+        .setValue("cssQuestions"),
+      new StringSelectMenuOptionBuilder()
+        .setLabel("JavaScript")
+        .setValue("javascriptQuestions")
+    );
+
+  const row = new ActionRowBuilder().addComponents(select);
+
+  openLanguageSelect(); //Calling the function to generate the language selection menu.
 
   //Defining the buttons for the interview question answers
   const choiceA = new ButtonBuilder()
