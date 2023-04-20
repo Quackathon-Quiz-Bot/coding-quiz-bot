@@ -176,6 +176,24 @@ javascriptQuestions = [
                 "array.shift(fish)",
               ]
             },
+            {
+              question: "How do return an element at specific index? const array=[dog, cat, bird, hamster]",
+              correctAnswer: "array[0]",
+              allAnswers: [
+                "index.array(0)",
+                "array.index[0]",
+                "array at(index 0)",
+              ]
+            },
+            {
+              question: "How do you join two or more strings using the `concat()` method?",
+              correctAnswer: "string1.concat(string2)",
+              allAnswers: [
+                "concat(string1, string2)",
+                "string1.join(string2)",
+                "concat(string1).concat(string2)"
+              ]
+            },
 
 
 
