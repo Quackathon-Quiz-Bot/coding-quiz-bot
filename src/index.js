@@ -21,6 +21,8 @@ const {
   ButtonStyle,
 } = require("discord.js");
 const questions = require("../questions.json").questions;
+const evaluateSolution = require("./evaluateSolution");
+const { spawn } = require("child_process");
 
 const client = new Client({
   intents: [
@@ -30,6 +32,10 @@ const client = new Client({
     IntentsBitField.Flags.MessageContent,
   ],
 });
+
+const prefix = "!";
+
+
 
 client.on("ready", (c) => {
   console.log(`Quiz-bot, ${c.user.tag}, is ready to test your skills!`);
@@ -129,7 +135,7 @@ client.on("messageCreate", (message) => {
         console.log(quizQuestion);
       }
       openQuestionMenu(interaction, quizQuestion);
-    }
+      }
 
     //Defining the buttons for the quiz answers
 
@@ -243,24 +249,118 @@ client.on("messageCreate", (message) => {
 /* //////////////////////////////// */
 /* ///////   SIGNED NL    ///////// */
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   // Ignore messages from bots
   if (message.author.bot) return;
 
-  //Check if message starts with the prefix
-  if (message.content.startsWith("!question")) {
-    message.channel.send("Generating a new question...");
-    // Get random question from questions.json
-    // Send question to channel
+  //Ignore if not prefixed with !
+  if (!message.content.startsWith(prefix)) return;
+  const args= message.content.slice(prefix.length).trim().split(/ +/);
+  const command = args.shift().toLowerCase();
 
-    const randomIdx = Math.floor(Math.random() * questions.length);
-    const question = questions[randomIdx];
-    console.log(question);
+  if (command === 'question'){
+    //get random question from questions.json
+    const question = questions[Math.floor(Math.random() * questions.length)];
 
-    message.channel.send(
-      `Question:\n${question.name}\n\n${question.description}`
-    );
+    //Extract the function name and format it if it has a space and make it camelCase
+    //const functionName = question.name;
+    //const functionName = question.name.replace(/\s/g, '');
+    const functionName = question.name.replace(/\s/g, '').replace(/^(.)/, (_, c) => c.toUpperCase());
+    // const params = question.tests.map(params => `\n ${params.input}`);
+
+    //Generate code block with the function name and params, and embedded
+    const codeBlock = `\`\`\`javascript \n function ${functionName}() { \n //Your code here \n } \n \`\`\``;
+    const description = ` \n ${question.description} \n`;
+  
+    console.log(codeBlock);
+    console.log(question.tests);
+
+    const embed = new EmbedBuilder()
+    .setColor('#FFD801')
+    .setTitle('Code Challenge')
+    .setDescription(`Please write the code for the following function:\n ${description} \n\n${codeBlock}\n\nPlease write your code in the chat below.`)
+    .addFields({name:'Input parameters:', value:`\n ${question.tests.map(params => `\n ${params.input}`)}`});
+
+    const formMessage = await message.channel.send({embeds: [embed]});
+
+    //Create a message collector to collect the user's code
+    // const collector = message.channel.createMessageCollector(message.channel, m => author.id === m.author.id, {time: 60000}) // 60 seconds;
+  
+    // collector.on('collect', async (inputMessage) => {
+    //   //Extract the code from the message
+    //   const code = inputMessage.content;
+
+    //   try {
+    //     //Evaluate the code
+    //     const script = new vm.Script(code);
+
+
+    //   } catch (error) {
+        
+    //   }
+
+    // })
+
   }
-});
+
+
+  //Check if message starts with the prefix
+//   if (message.content.startsWith("!question")) {
+//     message.channel.send("Generating a new question...");
+//     // Get random question from questions.json
+//     // Send question to channel
+
+//     const randomIdx = Math.floor(Math.random() * questions.length);
+//     const question = questions[randomIdx];
+//     console.log(question);
+
+//     message.channel.send(
+//       `Question:\n${question.name}\n\n${question.description}`
+//     );
+//   }
+
+
+// //Checking code for errors logic
+// if (message.content.startsWith("!check")){
+//   message.channel.send("Running your code...");
+ 
+
+
+
+// }
+})
+
+const executeCode = (code) => {
+  return new Promise((resolve, reject) => {
+      //Spawn a new Node.js process
+      const childProcess = spawn('node', ['-e', code]);
+      console.log(childProcess, 'childProcess')
+      console.log(code, 'code')
+
+      let stdout = '';
+      let stderr = '';
+
+      //Capture stdout and stderr output from the child process
+      childProcess.stdout.on('data', (data) => {
+          stdout += data.toString();
+  })
+
+  childProcess.stderr.on('data', (data) => {
+      stderr += data.toString();
+  })
+
+  //handle process exit
+  childProcess.on('exit', (code) => {
+      if (code === 0) {
+          resolve(stdout);
+      } else {
+          reject(new Error(`Child process exited with code ${code}. Stderr: ${stderr}`));
+      }
+  })
+
+  }   
+
+)}
+
 
 client.login(process.env.TOKEN);
