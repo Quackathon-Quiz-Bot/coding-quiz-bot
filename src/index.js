@@ -264,7 +264,7 @@ client.on("messageCreate", (message) => {
       interviewQuestions = await dataStructureQuestions[randomIndex];
       console.log(interviewQuestions);
     }
-    openInterviewQuestionMenu(interaction, quizQuestion);
+    openInterviewQuestionMenu(interaction, interviewQuestions);
   }
 
   //Defining the buttons for the interview answers
