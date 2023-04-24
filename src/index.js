@@ -44,7 +44,6 @@ client.on("ready", (c) => {
   console.log(`Quiz-bot, ${c.user.tag}, is ready to test your skills!`);
 });
 
-
 client.on("messageCreate", (message) => {
   let quizQuestion;
 
@@ -178,7 +177,6 @@ client.on("messageCreate", (message) => {
       const collector2 = sentQuestion.createMessageComponentCollector({
         componentType: ComponentType.Button,
         time: 30000, // Time limit for user interaction in milliseconds
-
       });
       collector2.on("collect", (interaction2) => {
         const selectedAnswer = interaction2.customId;
@@ -189,7 +187,7 @@ client.on("messageCreate", (message) => {
         if (collected.size === 0) {
           message.reply("Request timed out...");
         }
-      })
+      });
 
       async function checkAnswer(answerChoice, theInteraction) {
         console.log(answerChoice, "this is answer choice from function");
@@ -220,20 +218,19 @@ client.on("messageCreate", (message) => {
   }
 });
 
-
 /* ///////////////////////////////  */
 /* //     INTERVIEW QUESTIONS   //  */
 /* //////////////////////////////// */
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", (message2) => {
   let interviewQuestions;
 
   // Ignore messages from bots
-  if (message.author.bot) return;
+  if (message2.author.bot) return;
 
-  //Check if message starts with the prefix !interview
-  if (message.content.startsWith("!interview")) {
-    message.channel.send("Generating an interview question...");
+  //Check if message2 starts with the prefix !interview
+  if (message2.content.startsWith("!interview")) {
+    message2.channel.send("Generating an interview question...");
   }
 
   //Defining the menu for selecting a subject
@@ -251,37 +248,40 @@ client.on("messageCreate", (message) => {
     );
 
   const row = new ActionRowBuilder().addComponents(select);
-  //   openSubjectSelect(); //Calling the function to generate the language selection menu.
+
+  openSubjectSelect();
+  //Calling the function to generate the subject selection menu.
 
   //This is the function that generates the subject selection menu.
   async function openSubjectSelect() {
-    await message.reply({
+    await message2.reply({
       content: "What subject would you like a question about?",
       components: [row],
     });
-    const collector = message.channel.createMessageComponentCollector({
+    const collector3 = message2.channel.createMessageComponentCollector({
       time: 30000, // Time limit for user interaction in milliseconds
     });
 
-    collector.on("collect", (interaction) => {
-      const subject = interaction.values[0]; // The selected subject will be the only entry in the values array at index [0]
+    collector3.on("collect", (interaction4) => {
+      const subject = interaction4.values[0]; // The selected subject will be the only entry in the values array at index [0]
 
-      generateQuestion(subject, interaction); //Calls on the function to generate a quiz question based on the subject selected.
+      generateSubjectQuestion(subject, interaction4); //Calls on the function to generate a quiz question based on the subject selected.
+      collector3.stop();
     });
 
     //After 30 seconds, if a subject isn't selected the request times out.
-    collector.on("end", (collected) => {
+    collector3.on("end", (collected) => {
       if (collected.size === 0) {
-        message.reply("Request timed out...");
+        message2.reply("Request timed out...");
       }
     });
   }
 
   // This is the function that generates the interview question based on the subject that's fed in as a parameter.
   // When adding a new subject, add an if statement to direct the function to the right question set.
-  async function generateQuestion(option, interaction) {
+  async function generateSubjectQuestion(choice, interaction3) {
     //Algorithm
-    if (option == "algorithmicQuestions") {
+    if (choice == "algorithmicQuestions") {
       const randomIndex = Math.floor(
         Math.random() * algorithmicQuestions.length
       );
@@ -290,19 +290,19 @@ client.on("messageCreate", (message) => {
     }
 
     //Data Structures
-    if (option == "dataStructureQuestions") {
+    if (choice == "dataStructureQuestions") {
       const randomIndex = Math.floor(
         Math.random() * dataStructureQuestions.length
       );
       interviewQuestions = await dataStructureQuestions[randomIndex];
       console.log(interviewQuestions);
     }
-    openInterviewQuestionMenu(interaction, interviewQuestions);
+    openInterviewQuestionMenu(interaction3, interviewQuestions);
   }
 
   //Defining the buttons for the interview answers
 
-  function shuffleArray(array) {
+  function shuffleInterviewArray(array) {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -313,24 +313,24 @@ client.on("messageCreate", (message) => {
 
   //Function for sending the message to the discord channel.
   async function openInterviewQuestionMenu(interaction, interviewQuestions) {
-    const shuffledAnswers = shuffleArray([
+    const shuffledAnswers = shuffleInterviewArray([
       ...interviewQuestions.allAnswers,
       interviewQuestions.correctAnswer,
     ]);
     const choice1 = new ButtonBuilder()
-      .setCustomId("1")
+      .setCustomId(`${shuffledAnswers[0]}`)
       .setLabel(`${shuffledAnswers[0]}`)
       .setStyle(ButtonStyle.Secondary);
     const choice2 = new ButtonBuilder()
-      .setCustomId("2")
+      .setCustomId(`${shuffledAnswers[1]}`)
       .setLabel(`${shuffledAnswers[1]}`)
       .setStyle(ButtonStyle.Secondary);
     const choice3 = new ButtonBuilder()
-      .setCustomId("3")
+      .setCustomId(`${shuffledAnswers[2]}`)
       .setLabel(`${shuffledAnswers[2]}`)
       .setStyle(ButtonStyle.Secondary);
     const choice4 = new ButtonBuilder()
-      .setCustomId("4")
+      .setCustomId(`${shuffledAnswers[3]}`)
       .setLabel(`${shuffledAnswers[3]}`)
       .setStyle(ButtonStyle.Secondary);
 
@@ -341,26 +341,38 @@ client.on("messageCreate", (message) => {
       choice4
     );
 
-    const sentQuestion = await interaction.reply({
+    const sentSubjectQuestion = await interaction.reply({
       content: `${interviewQuestions.question}`,
       components: [answerChoices],
     });
 
-    const collector = sentQuestion.createMessageComponentCollector({
-      componentType: "BUTTON",
-      time: 10000,
+    const collector3 = sentSubjectQuestion.createMessageComponentCollector({
+      componentType: ComponentType.Button,
+      time: 30000,
     });
-    collector.on("collect", async (interaction) => {
-      const selectedAnswer = interaction.customId;
-      if (selectedAnswer === quizQuestion.correctAnswer) {
+    collector3.on("collect", async (interaction3) => {
+      const selectedSubjectAnswer = interaction3.customId;
+      checkSubjectAnswer(selectedSubjectAnswer, interaction3);
+      collector3.stop();
+    });
+    collector3.on("end", (collected) => {
+      if (collected.size === 0) {
+        message2.reply("Request timed out...");
+      }
+    });
+
+    async function checkSubjectAnswer(
+      selectedSubjectAnswer,
+      interviewInteraction
+    ) {
+      if (selectedSubjectAnswer === interviewQuestions.correctAnswer) {
         const successEmbed = new EmbedBuilder()
           .setColor("#00ff00")
           .setTitle("Correct!")
           .setDescription("You selected the correct answer!");
 
-        await interaction.update({
+        await interviewInteraction.reply({
           embeds: [successEmbed],
-          components: [],
         });
       } else {
         const failureEmbed = new EmbedBuilder()
@@ -368,13 +380,11 @@ client.on("messageCreate", (message) => {
           .setTitle("Incorrect!")
           .setDescription("You selected the wrong answer!");
 
-        await interaction.update({
+        await interviewInteraction.reply({
           embeds: [failureEmbed],
-          components: [],
         });
       }
-      collector.stop();
-    });
+    }
   }
 });
 
