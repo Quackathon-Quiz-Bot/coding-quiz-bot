@@ -202,8 +202,8 @@ client.on("messageCreate", (message) => {
     message.channel.send("Generating an interview question...");
   }
 
-  //Defining the menu for selecting a language
-  //If adding a set of questions for another language here is where you will add the option for it in the language selection menu.
+  //Defining the menu for selecting a subject
+  //If adding a set of questions for another subject here is where you will add the option for it in the subject selection menu.
   const select = new StringSelectMenuBuilder()
     .setCustomId("interviewSelector")
     .setPlaceholder("Subjects")
@@ -218,7 +218,7 @@ client.on("messageCreate", (message) => {
 
   const row = new ActionRowBuilder().addComponents(select);
 
-  openSubjectSelect(); //Calling the function to generate the language selection menu.
+  openSubjectSelect(); //Calling the function to generate the subject selection menu.
 
   //This is the function that generates the subject selection menu.
   async function openSubjectSelect() {
