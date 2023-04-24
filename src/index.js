@@ -44,18 +44,6 @@ client.on("ready", (c) => {
   console.log(`Quiz-bot, ${c.user.tag}, is ready to test your skills!`);
 });
 
-// This can probably be deleted if we are not going to use the slash commands.
-// client.on('interactionCreate', (interaction) => {
-//     if (!interaction.isChatInputCommand()) {
-//         return
-//     }
-
-//     console.log(interaction.commandName)
-
-//     if(interaction.commandName === 'quiz-question'){
-//         interaction.reply("Generating a new quiz question...")
-//     }
-// })
 
 client.on("messageCreate", (message) => {
   let quizQuestion;
@@ -182,13 +170,6 @@ client.on("messageCreate", (message) => {
         choice4
       );
 
-      //code below is not working Not sure why, will come back to it later. Or feel free to tweek if you see what's wrong.
-      // collector.on("collect", (interaction) => {
-      // const language = interaction.values[0];
-      //  await (interaction2)=>{interaction2.reply({
-      //   content: `${quizQuestion.question}`,
-      //   components: [answerChoices],
-      // })};
       const sentQuestion = await interaction.reply({
         content: `${quizQuestion.question}`,
         components: [answerChoices],
@@ -238,6 +219,7 @@ client.on("messageCreate", (message) => {
     }
   }
 });
+
 
 /* ///////////////////////////////  */
 /* //     INTERVIEW QUESTIONS   //  */
