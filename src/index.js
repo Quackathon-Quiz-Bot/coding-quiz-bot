@@ -224,7 +224,7 @@ client.on("messageCreate", (message) => {
 
   const row = new ActionRowBuilder().addComponents(select);
 
-  openLanguageSelect(); //Calling the function to generate the language selection menu.
+//   openLanguageSelect(); //Calling the function to generate the language selection menu.
 
   //Defining the buttons for the interview question answers
   const choiceA = new ButtonBuilder()
@@ -291,7 +291,7 @@ client.on("messageCreate", async (message) => {
     //Generate code block with the function name and params, and embedded
     const codeBlock = `\`\`\`javascript \n function ${functionName}() { \n //Your code here \n } \n \`\`\``;
     const description = ` \n ${question.description} \n`;
-  
+
     console.log(codeBlock);
     console.log(question.tests);
 
@@ -305,7 +305,7 @@ client.on("messageCreate", async (message) => {
 
     //Create a message collector to collect the user's code
     // const collector = message.channel.createMessageCollector(message.channel, m => author.id === m.author.id, {time: 60000}) // 60 seconds;
-  
+
     // collector.on('collect', async (inputMessage) => {
     //   //Extract the code from the message
     //   const code = inputMessage.content;
@@ -316,7 +316,7 @@ client.on("messageCreate", async (message) => {
 
 
     //   } catch (error) {
-        
+
     //   }
 
     // })
@@ -343,7 +343,7 @@ client.on("messageCreate", async (message) => {
 // //Checking code for errors logic
 // if (message.content.startsWith("!check")){
 //   message.channel.send("Running your code...");
- 
+
 
 
 
@@ -378,7 +378,7 @@ const executeCode = (code) => {
       }
   })
 
-  }   
+  }
 
 )}
 
