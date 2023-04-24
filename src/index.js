@@ -235,7 +235,7 @@ client.on("messageCreate", (message2) => {
 
   //Defining the menu for selecting a subject
   //If adding a set of questions for another subject here is where you will add the option for it in the subject selection menu.
-  const select = new StringSelectMenuBuilder()
+  const interviewSelect = new StringSelectMenuBuilder()
     .setCustomId("interviewSelector")
     .setPlaceholder("Subjects")
     .addOptions(
@@ -247,7 +247,7 @@ client.on("messageCreate", (message2) => {
         .setValue("dataStructureQuestions")
     );
 
-  const row = new ActionRowBuilder().addComponents(select);
+  const rowInterview = new ActionRowBuilder().addComponents(interviewSelect);
 
   openSubjectSelect();
   //Calling the function to generate the subject selection menu.
@@ -256,16 +256,16 @@ client.on("messageCreate", (message2) => {
   async function openSubjectSelect() {
     await message2.reply({
       content: "What subject would you like a question about?",
-      components: [row],
+      components: [rowInterview],
     });
     const collector3 = message2.channel.createMessageComponentCollector({
       time: 30000, // Time limit for user interaction in milliseconds
     });
 
-    collector3.on("collect", (interaction4) => {
-      const subject = interaction4.values[0]; // The selected subject will be the only entry in the values array at index [0]
+    collector3.on("collect", (interaction3) => {
+      const subject = interaction3.values[0]; // The selected subject will be the only entry in the values array at index [0]
 
-      generateSubjectQuestion(subject, interaction4); //Calls on the function to generate a quiz question based on the subject selected.
+      generateSubjectQuestion(subject, interaction3); //Calls on the function to generate a quiz question based on the subject selected.
       collector3.stop();
     });
 
@@ -282,19 +282,19 @@ client.on("messageCreate", (message2) => {
   async function generateSubjectQuestion(choice, interaction3) {
     //Algorithm
     if (choice == "algorithmicQuestions") {
-      const randomIndex = Math.floor(
+      const randomIndexInterview = Math.floor(
         Math.random() * algorithmicQuestions.length
       );
-      interviewQuestions = await algorithmicQuestions[randomIndex];
+      interviewQuestions = await algorithmicQuestions[randomIndexInterview];
       console.log(interviewQuestions);
     }
 
     //Data Structures
     if (choice == "dataStructureQuestions") {
-      const randomIndex = Math.floor(
+      const randomIndexInterview = Math.floor(
         Math.random() * dataStructureQuestions.length
       );
-      interviewQuestions = await dataStructureQuestions[randomIndex];
+      interviewQuestions = await dataStructureQuestions[randomIndexInterview];
       console.log(interviewQuestions);
     }
     openInterviewQuestionMenu(interaction3, interviewQuestions);
@@ -312,7 +312,7 @@ client.on("messageCreate", (message2) => {
   }
 
   //Function for sending the message to the discord channel.
-  async function openInterviewQuestionMenu(interaction, interviewQuestions) {
+  async function openInterviewQuestionMenu(interaction3, interviewQuestions) {
     const shuffledAnswers = shuffleInterviewArray([
       ...interviewQuestions.allAnswers,
       interviewQuestions.correctAnswer,
@@ -334,28 +334,28 @@ client.on("messageCreate", (message2) => {
       .setLabel(`${shuffledAnswers[3]}`)
       .setStyle(ButtonStyle.Secondary);
 
-    const answerChoices = new ActionRowBuilder().addComponents(
+    const interviewAnswerChoices = new ActionRowBuilder().addComponents(
       choice1,
       choice2,
       choice3,
       choice4
     );
 
-    const sentSubjectQuestion = await interaction.reply({
+    const sentSubjectQuestion = await interaction3.reply({
       content: `${interviewQuestions.question}`,
-      components: [answerChoices],
+      components: [interviewAnswerChoices],
     });
 
-    const collector3 = sentSubjectQuestion.createMessageComponentCollector({
+    const collector4 = sentSubjectQuestion.createMessageComponentCollector({
       componentType: ComponentType.Button,
       time: 30000,
     });
-    collector3.on("collect", async (interaction3) => {
-      const selectedSubjectAnswer = interaction3.customId;
-      checkSubjectAnswer(selectedSubjectAnswer, interaction3);
-      collector3.stop();
+    collector4.on("collect", async (interaction4) => {
+      const selectedSubjectAnswer = interaction4.customId;
+      checkSubjectAnswer(selectedSubjectAnswer, interaction4);
+      collector4.stop();
     });
-    collector3.on("end", (collected) => {
+    collector4.on("end", (collected) => {
       if (collected.size === 0) {
         message2.reply("Request timed out...");
       }
