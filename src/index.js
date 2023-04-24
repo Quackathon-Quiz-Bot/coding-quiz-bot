@@ -179,10 +179,42 @@ client.on("messageCreate", (message) => {
         choice4
       );
 
+//code below is not working Not sure why, will come back to it later. Or feel free to tweek if you see what's wrong.
+      // const sentQuestion =
       await interaction.reply({
         content: `${quizQuestion.question}`,
         components: [answerChoices],
       });
+//       const collector = sentQuestion.createMessageComponentCollector({
+//         componentType: "BUTTON",
+//         time: 10000,
+//       });
+//       collector.on("collect", async (interaction) => {
+//         const selectedAnswer = interaction.customId;
+//         if (selectedAnswer === quizQuestion.correctAnswer) {
+//           const successEmbed = new EmbedBuilder()
+//             .setColor("#00ff00")
+//             .setTitle("Correct!")
+//             .setDescription("You selected the correct answer!");
+
+//           await interaction.update({
+//             embeds: [successEmbed],
+//             components: [],
+//           });
+//         } else {
+//           const failureEmbed = new EmbedBuilder()
+//             .setColor("#ff0000")
+//             .setTitle("Incorrect!")
+//             .setDescription("You selected the wrong answer!");
+
+//           await interaction.update({
+//             embeds: [failureEmbed],
+//             components: [],
+//           });
+//         }
+//         collector.stop();
+//       });
+
     }
   }
 });
@@ -218,7 +250,7 @@ client.on("messageCreate", (message) => {
 
   const row = new ActionRowBuilder().addComponents(select);
 
-  openSubjectSelect(); //Calling the function to generate the language selection menu.
+//   openSubjectSelect(); //Calling the function to generate the language selection menu.
 
   //This is the function that generates the subject selection menu.
   async function openSubjectSelect() {
@@ -398,12 +430,16 @@ client.on("messageCreate", async (message) => {
   //     );
   //   }
 
-  // //Checking code for errors logic
-  // if (message.content.startsWith("!check")){
-  //   message.channel.send("Running your code...");
 
-  // }
-});
+// //Checking code for errors logic
+// if (message.content.startsWith("!check")){
+//   message.channel.send("Running your code...");
+
+
+
+
+// }
+})
 
 const executeCode = (code) => {
   return new Promise((resolve, reject) => {
@@ -433,8 +469,11 @@ const executeCode = (code) => {
           new Error(`Child process exited with code ${code}. Stderr: ${stderr}`)
         );
       }
-    });
-  });
-};
+  })
+
+  }
+
+)}
+
 
 client.login(process.env.TOKEN);
