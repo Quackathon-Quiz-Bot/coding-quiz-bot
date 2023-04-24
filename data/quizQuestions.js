@@ -194,6 +194,15 @@ javascriptQuestions = [
                 "concat(string1).concat(string2)"
               ]
             },
+            {
+              question: "How do you use the `some()` method in JavaScript?",
+              correctAnswer: "myArray.some(callbackFunction)",
+              allAnswers: [
+                "myArray.some()",
+                "myArray.some(callbackFunction, initialValue)",
+                "some(callbackFunction, myArray)"
+              ]
+            },
 
 
 
