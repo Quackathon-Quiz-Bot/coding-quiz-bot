@@ -22,6 +22,8 @@ const {
   EmbedBuilder,
   ButtonBuilder,
   ButtonStyle,
+  Component,
+  ComponentType,
 } = require("discord.js");
 const questions = require("../questions.json").questions;
 const evaluateSolution = require("./evaluateSolution");
@@ -42,18 +44,6 @@ client.on("ready", (c) => {
   console.log(`Quiz-bot, ${c.user.tag}, is ready to test your skills!`);
 });
 
-// This can probably be deleted if we are not going to use the slash commands.
-// client.on('interactionCreate', (interaction) => {
-//     if (!interaction.isChatInputCommand()) {
-//         return
-//     }
-
-//     console.log(interaction.commandName)
-
-//     if(interaction.commandName === 'quiz-question'){
-//         interaction.reply("Generating a new quiz question...")
-//     }
-// })
 
 client.on("messageCreate", (message) => {
   let quizQuestion;
@@ -100,6 +90,7 @@ client.on("messageCreate", (message) => {
         const language = interaction.values[0]; // The selected language will be the only entry in the values array at index [0]
 
         generateQuestion(language, interaction); //Calls on the function to generate a quiz question based on the language selected.
+        collector.stop();
       });
 
       //After 30 seconds, if a language isn't selected the request times out.
@@ -156,19 +147,19 @@ client.on("messageCreate", (message) => {
         quizQuestion.correctAnswer,
       ]);
       const choice1 = new ButtonBuilder()
-        .setCustomId("1")
+        .setCustomId(`${shuffledAnswers[0]}`)
         .setLabel(`${shuffledAnswers[0]}`)
         .setStyle(ButtonStyle.Secondary);
       const choice2 = new ButtonBuilder()
-        .setCustomId("2")
+        .setCustomId(`${shuffledAnswers[1]}`)
         .setLabel(`${shuffledAnswers[1]}`)
         .setStyle(ButtonStyle.Secondary);
       const choice3 = new ButtonBuilder()
-        .setCustomId("3")
+        .setCustomId(`${shuffledAnswers[2]}`)
         .setLabel(`${shuffledAnswers[2]}`)
         .setStyle(ButtonStyle.Secondary);
       const choice4 = new ButtonBuilder()
-        .setCustomId("4")
+        .setCustomId(`${shuffledAnswers[3]}`)
         .setLabel(`${shuffledAnswers[3]}`)
         .setStyle(ButtonStyle.Secondary);
 
@@ -179,13 +170,56 @@ client.on("messageCreate", (message) => {
         choice4
       );
 
-      await interaction.reply({
+      const sentQuestion = await interaction.reply({
         content: `${quizQuestion.question}`,
         components: [answerChoices],
       });
+
+      const collector2 = sentQuestion.createMessageComponentCollector({
+        componentType: ComponentType.Button,
+        time: 30000, // Time limit for user interaction in milliseconds
+
+      });
+      collector2.on("collect", (interaction2) => {
+        const selectedAnswer = interaction2.customId;
+        checkAnswer(selectedAnswer, interaction2);
+        collector2.stop();
+      });
+      collector2.on("end", (collected) => {
+        if (collected.size === 0) {
+          message.reply("Request timed out...");
+        }
+      })
+
+      async function checkAnswer(answerChoice, theInteraction) {
+        console.log(answerChoice, "this is answer choice from function");
+        console.log(quizQuestion.correctAnswer, "correct Answer");
+        if (answerChoice === quizQuestion.correctAnswer) {
+          console.log("we went into correct");
+          const successEmbed = new EmbedBuilder()
+            .setColor("#00ff00")
+            .setTitle("Correct!")
+            .setDescription("You selected the correct answer!");
+
+          await theInteraction.reply({
+            embeds: [successEmbed],
+          });
+        } else {
+          console.log("we went into incorrect");
+          const failureEmbed = new EmbedBuilder()
+            .setColor("#ff0000")
+            .setTitle("Incorrect!")
+            .setDescription("You selected the wrong answer!");
+
+          await theInteraction.reply({
+            embeds: [failureEmbed],
+          });
+        }
+      }
     }
   }
 });
+
 
 /* ///////////////////////////////  */
 /* //     INTERVIEW QUESTIONS   //  */
@@ -217,8 +251,7 @@ client.on("messageCreate", (message) => {
     );
 
   const row = new ActionRowBuilder().addComponents(select);
-
-  openSubjectSelect(); //Calling the function to generate the subject selection menu.
+  //   openSubjectSelect(); //Calling the function to generate the language selection menu.
 
   //This is the function that generates the subject selection menu.
   async function openSubjectSelect() {
@@ -308,9 +341,39 @@ client.on("messageCreate", (message) => {
       choice4
     );
 
-    await interaction.reply({
+    const sentQuestion = await interaction.reply({
       content: `${interviewQuestions.question}`,
       components: [answerChoices],
+    });
+
+    const collector = sentQuestion.createMessageComponentCollector({
+      componentType: "BUTTON",
+      time: 10000,
+    });
+    collector.on("collect", async (interaction) => {
+      const selectedAnswer = interaction.customId;
+      if (selectedAnswer === quizQuestion.correctAnswer) {
+        const successEmbed = new EmbedBuilder()
+          .setColor("#00ff00")
+          .setTitle("Correct!")
+          .setDescription("You selected the correct answer!");
+
+        await interaction.update({
+          embeds: [successEmbed],
+          components: [],
+        });
+      } else {
+        const failureEmbed = new EmbedBuilder()
+          .setColor("#ff0000")
+          .setTitle("Incorrect!")
+          .setDescription("You selected the wrong answer!");
+
+        await interaction.update({
+          embeds: [failureEmbed],
+          components: [],
+        });
+      }
+      collector.stop();
     });
   }
 });
