@@ -10,18 +10,14 @@
 
 algorithmicQuestions = [
   {
-    question: "What is an API?",
-    correctAnswer: "Application Programming Interface",
+    question: "What is an Algorithm?",
+    correctAnswer:
+      "A set of rules to obtain the expected output from the given input",
     allAnswers: [
-      "Application Procedure Interface",
-      "Access Practical Internet",
-      "Application Programming Interaction",
+      "A function for mapping through an array",
+      "An API request to the server",
+      "A mathematical problem",
     ],
-  },
-  {
-    question: "What is the name for a function that calls itself?",
-    correctAnswer: "Recursive function",
-    allAnswers: ["Return", "Reserve function", "While Loop"],
   },
 ];
 
