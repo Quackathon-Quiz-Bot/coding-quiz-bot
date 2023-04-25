@@ -10,6 +10,9 @@ const {
   dataStructureQuestions,
   algorithmicQuestions,
 } = require("../data/interviewQuestions");
+
+const questions = require("../questions.json").questions;
+
 const {
   Client,
   IntentsBitField,
@@ -25,8 +28,9 @@ const {
   Component,
   ComponentType,
 } = require("discord.js");
-const questions = require("../questions.json").questions;
+
 const evaluateSolution = require("./evaluateSolution");
+
 const { spawn } = require("child_process");
 
 const client = new Client({
@@ -44,18 +48,23 @@ client.on("ready", (c) => {
   console.log(`Quiz-bot, ${c.user.tag}, is ready to test your skills!`);
 });
 
+
+/* //////////////////////////////////////////  */
+/* //     CODING LANGUAGE QUIZ QUESTIONS   //  */
+/* /////////////////////////////////////////// */
+
 client.on("messageCreate", (message) => {
   let quizQuestion;
 
   // Ignore messages from bots
   if (message.author.bot) return;
 
-  //Check if message starts with the prefix
+  // Check if message starts with the prefix
   if (message.content.startsWith("!quiz")) {
     message.channel.send("Generating a new quiz question...");
 
-    //Defining the menu for selecting a language
-    //If adding a set of questions for another language here is where you will add the option for it in the language selection menu.
+    // Defining the menu for selecting a language
+    // If adding a set of questions for another language here is where you will add the option for it in the language selection menu.
     const select = new StringSelectMenuBuilder()
       .setCustomId("languageSelector")
       .setPlaceholder("Languages")
@@ -73,9 +82,9 @@ client.on("messageCreate", (message) => {
 
     const row = new ActionRowBuilder().addComponents(select);
 
-    openLanguageSelect(); //Calling the function to generate the language selection menu.
+    openLanguageSelect(); // Calling the function to generate the language selection menu.
 
-    //This is the function that generates the language selection menu.
+    // This is the function that generates the language selection menu.
     async function openLanguageSelect() {
       await message.reply({
         content: "What language would you like a question about?",
@@ -88,11 +97,11 @@ client.on("messageCreate", (message) => {
       collector.on("collect", (interaction) => {
         const language = interaction.values[0]; // The selected language will be the only entry in the values array at index [0]
 
-        generateQuestion(language, interaction); //Calls on the function to generate a quiz question based on the language selected.
-        collector.stop();
+        generateQuestion(language, interaction); // Calls on the function to generate a quiz question based on the language selected.
+        collector.stop(); // Ends the collector after the user has selected a language and a question has been generated.
       });
 
-      //After 30 seconds, if a language isn't selected the request times out.
+      // After 30 seconds, if a language isn't selected the request times out.
       collector.on("end", (collected) => {
         if (collected.size === 0) {
           message.reply("Request timed out...");
@@ -103,21 +112,21 @@ client.on("messageCreate", (message) => {
     // This is the function that generates the quiz question based on the language that's fed in as a parameter.
     // When adding a new language, add an if statement to direct the function to the right question set.
     async function generateQuestion(option, interaction) {
-      //HTML
+      // HTML
       if (option == "htmlQuestions") {
         const randomIndex = Math.floor(Math.random() * htmlQuestions.length);
         quizQuestion = await htmlQuestions[randomIndex];
         console.log(quizQuestion, "line 110");
       }
 
-      //CSS
+      // CSS
       if (option == "cssQuestions") {
         const randomIndex = Math.floor(Math.random() * cssQuestions.length);
         quizQuestion = await cssQuestions[randomIndex];
         console.log(quizQuestion);
       }
 
-      //JavaScript
+      // JavaScript
       if (option == "javascriptQuestions") {
         const randomIndex = Math.floor(
           Math.random() * javascriptQuestions.length
@@ -125,11 +134,12 @@ client.on("messageCreate", (message) => {
         quizQuestion = await javascriptQuestions[randomIndex];
         console.log(quizQuestion);
       }
+
+      // Sends the question after a language is selected
       openQuestionMenu(interaction, quizQuestion);
     }
 
-    //Defining the buttons for the quiz answers
-
+    // Function for shuffling the array of answer choices
     function shuffleArray(array) {
       const shuffled = [...array];
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -139,7 +149,7 @@ client.on("messageCreate", (message) => {
       return shuffled;
     }
 
-    //Function for sending the message to the discord channel.
+    // Function for sending the question and answer choices to the discord channel starting a collector to listen for the answer choice, and sending feedback after the question is answered.
     async function openQuestionMenu(interaction, quizQuestion) {
       const shuffledAnswers = shuffleArray([
         ...quizQuestion.allAnswers,
@@ -179,37 +189,40 @@ client.on("messageCreate", (message) => {
         time: 30000, // Time limit for user interaction in milliseconds
       });
       collector2.on("collect", (interaction2) => {
-        const selectedAnswer = interaction2.customId;
-        checkAnswer(selectedAnswer, interaction2);
-        collector2.stop();
+        const selectedAnswer = interaction2.customId; // The answer the user selected.
+        checkAnswer(selectedAnswer, interaction2); // Check to see if the answer the user selected is the correct answer choice.
+        collector2.stop(); //Ends the collector after the user has selected an answer.
       });
+
+      // After 30 seconds, if an answer isn't selected the request times out.
       collector2.on("end", (collected) => {
         if (collected.size === 0) {
           message.reply("Request timed out...");
         }
       });
 
-      async function checkAnswer(answerChoice, theInteraction) {
-        console.log(answerChoice, "this is answer choice from function");
-        console.log(quizQuestion.correctAnswer, "correct Answer");
+      //Function for checking whether the selected answer is correct and sending feedback accordingly.
+      async function checkAnswer(answerChoice, interaction2) {
+
+        //If the chosen answer and the correct answer match, send positive feedback.
         if (answerChoice === quizQuestion.correctAnswer) {
-          console.log("we went into correct");
           const successEmbed = new EmbedBuilder()
             .setColor("#00ff00")
             .setTitle("Correct!")
-            .setDescription("You selected the correct answer!");
+            .setDescription(`Great job, ${interaction2.user.username}! You selected the correct answer, ${answerChoice}!`);
 
-          await theInteraction.reply({
+          await interaction2.reply({
             embeds: [successEmbed],
           });
+
         } else {
-          console.log("we went into incorrect");
+          //If the chosen answer and the correct answer match, send positive feedback.
           const failureEmbed = new EmbedBuilder()
             .setColor("#ff0000")
             .setTitle("Incorrect!")
             .setDescription("You selected the wrong answer!");
 
-          await theInteraction.reply({
+          await interaction2.reply({
             embeds: [failureEmbed],
           });
         }
@@ -231,7 +244,7 @@ client.on("messageCreate", (message2) => {
   //Check if message2 starts with the prefix !interview
   if (message2.content.startsWith("!interview")) {
     message2.channel.send("Generating an interview question...");
-  }
+  
 
   //Defining the menu for selecting a subject
   //If adding a set of questions for another subject here is where you will add the option for it in the subject selection menu.
@@ -385,7 +398,7 @@ client.on("messageCreate", (message2) => {
         });
       }
     }
-  }
+  }}
 });
 
 /* ///////////////////////////////  */
