@@ -48,6 +48,37 @@ client.on("ready", (c) => {
   console.log(`Quiz-bot, ${c.user.tag}, is ready to test your skills!`);
 });
 
+/* ////////////////////////////////////  */
+/* //     CODING BOT HELP COMMAND    //  */
+/* ///////////////////////////////////// */
+
+client.on("messageCreate", async (message) => {
+
+    // Ignore messages from bots
+    if (message.author.bot) return;
+
+    // Check if message starts with the prefix
+    if (message.content.startsWith("!codingbothelp")) {
+
+      // Defines the message that will be sent with information about the coding bot.
+      const helpEmbed = new EmbedBuilder()
+            .setColor("#ffce47")
+            .setTitle("About the Coding Quiz Bot")
+            .setDescription("Coding Quiz Bot is a discord bot that generates coding questions to keep users skills sharp!")
+            .addFields(
+              { name: '\u200B', value: '\u200B' },
+              { name: 'Commands', value: `!quiz - Generates a new trivia question for you to answer. \n\n!interview - Generates a question about algorithms or data structures you may be asked about in an interview.\n\n!question - Generates a coding challenge for you to complete (like Codewars or Leetcode!) `},
+              { name: '\u200B', value: '\u200B' },
+              { name: 'Want to Contribute?', value: `Info about open source contributions... \n\nCheck out the issues tab to get some ideas about how you can help improve the bot, or make your own suggestions!`}
+            );
+
+
+            //Sends the message. 
+          await message.channel.send({
+            embeds: [helpEmbed],
+          });
+    }
+})
 
 /* //////////////////////////////////////////  */
 /* //     CODING LANGUAGE QUIZ QUESTIONS   //  */
