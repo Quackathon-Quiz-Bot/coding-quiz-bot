@@ -84,7 +84,7 @@ client.on("messageCreate", async (message) => {
 /* //     CODING LANGUAGE QUIZ QUESTIONS   //  */
 /* /////////////////////////////////////////// */
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   let quizQuestion;
 
   // Ignore messages from bots
@@ -92,7 +92,13 @@ client.on("messageCreate", (message) => {
 
   // Check if message starts with the prefix
   if (message.content.startsWith("!quiz")) {
-    message.channel.send("Generating a new quiz question...");
+    const generatingQuizEmbed = new EmbedBuilder()
+    .setColor("#ffce47")
+    .setTitle("It's Trivia Time!")
+    .setDescription(`Generating a new quiz question...`)
+
+
+    await message.channel.send({embeds: [generatingQuizEmbed]});
 
     // Defining the menu for selecting a language
     // If adding a set of questions for another language here is where you will add the option for it in the language selection menu.
@@ -117,8 +123,12 @@ client.on("messageCreate", (message) => {
 
     // This is the function that generates the language selection menu.
     async function openLanguageSelect() {
+      const embeddedLanguageSelect = new EmbedBuilder()
+      .setColor("#ffce47")
+      .setTitle(`What language would you like a question about?`)
+
       await message.reply({
-        content: "What language would you like a question about?",
+        embeds: [embeddedLanguageSelect],
         components: [row],
       });
       const collector = message.channel.createMessageComponentCollector({
@@ -134,8 +144,12 @@ client.on("messageCreate", (message) => {
 
       // After 30 seconds, if a language isn't selected the request times out.
       collector.on("end", (collected) => {
+        const timeoutEmbed = new EmbedBuilder()
+      .setColor("#ffce47")
+      .setTitle(`Request timed out...`)
+
         if (collected.size === 0) {
-          message.reply("Request timed out...");
+          message.reply({embeds: [timeoutEmbed]});
         }
       });
     }
@@ -210,8 +224,12 @@ client.on("messageCreate", (message) => {
         choice4
       );
 
+      const embeddedQuestion = new EmbedBuilder()
+      .setColor("#ffce47")
+      .setTitle(`${quizQuestion.question}`)
+
       const sentQuestion = await interaction.reply({
-        content: `${quizQuestion.question}`,
+        embeds: [embeddedQuestion],
         components: [answerChoices],
       });
 
@@ -227,10 +245,14 @@ client.on("messageCreate", (message) => {
 
       // After 30 seconds, if an answer isn't selected the request times out.
       collector2.on("end", (collected) => {
+        const timeoutEmbed = new EmbedBuilder()
+      .setColor("#ffce47")
+      .setTitle(`Request timed out...`)
+
         if (collected.size === 0) {
-          message.reply("Request timed out...");
+          message.reply({embeds: [timeoutEmbed]});
         }
-      });
+      });;
 
       //Function for checking whether the selected answer is correct and sending feedback accordingly.
       async function checkAnswer(answerChoice, interaction2) {
@@ -240,7 +262,7 @@ client.on("messageCreate", (message) => {
           const successEmbed = new EmbedBuilder()
             .setColor("#00ff00")
             .setTitle("Correct!")
-            .setDescription(`Great job, ${interaction2.user.username}! You selected the correct answer, ${answerChoice}!`);
+            .setDescription(`Great job, ${interaction2.user.username}! "${answerChoice}" was the correct answer!`);
 
           await interaction2.reply({
             embeds: [successEmbed],
