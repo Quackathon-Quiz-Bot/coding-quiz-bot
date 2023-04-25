@@ -270,11 +270,11 @@ javascriptQuestions = [
     question:
       "What is the difference between the logical OR operator (||) and the logical AND operator (&&)?",
     correctAnswer:
-      "The OR operator returns true if one of its operands is true, the AND operator returns true only if both are true",
+      "OR returns true if either operand is true, AND returns only if both are true",
     allAnswers: [
-      "The AND operator returns true if one of its operands is true, the OR operator returns true only if both are true",
-      "The logical OR operator always returns false, while the logical AND operator always returns true.",
-      "There is no difference between the two operators.",
+      "AND returns true if either operand is true, OR returns only if both are true",
+      "OR always returns false, while AND always returns true",
+      "There is no difference between the two operators",
     ],
   },
   {
