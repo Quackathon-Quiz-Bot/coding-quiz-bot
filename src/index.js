@@ -73,7 +73,7 @@ client.on("messageCreate", async (message) => {
             );
 
 
-            //Sends the message. 
+            //Sends the message.
           await message.channel.send({
             embeds: [helpEmbed],
           });
@@ -273,7 +273,7 @@ client.on("messageCreate", async (message) => {
           const failureEmbed = new EmbedBuilder()
             .setColor("#ff0000")
             .setTitle("Incorrect!")
-            .setDescription("You selected the wrong answer!");
+            .setDescription(`${interaction2.user.username} you selected the wrong answer... The correct answer is ${quizQuestion.correctAnswer}. Keep studying you got this!`);
 
           await interaction2.reply({
             embeds: [failureEmbed],
@@ -297,7 +297,7 @@ client.on("messageCreate", (message2) => {
   //Check if message2 starts with the prefix !interview
   if (message2.content.startsWith("!interview")) {
     message2.channel.send("Generating an interview question...");
-  
+
 
   //Defining the menu for selecting a subject
   //If adding a set of questions for another subject here is where you will add the option for it in the subject selection menu.
