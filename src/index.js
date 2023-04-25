@@ -127,7 +127,7 @@ client.on("messageCreate", async (message) => {
       .setColor("#ffce47")
       .setTitle(`What language would you like a question about?`)
 
-      await message.reply({
+      await message.channel.send({
         embeds: [embeddedLanguageSelect],
         components: [row],
       });
@@ -149,7 +149,7 @@ client.on("messageCreate", async (message) => {
       .setTitle(`Request timed out...`)
 
         if (collected.size === 0) {
-          message.reply({embeds: [timeoutEmbed]});
+          message.channel.send({embeds: [timeoutEmbed]});
         }
       });
     }
@@ -250,7 +250,7 @@ client.on("messageCreate", async (message) => {
       .setTitle(`Request timed out...`)
 
         if (collected.size === 0) {
-          message.reply({embeds: [timeoutEmbed]});
+          message.channel.send({embeds: [timeoutEmbed]});
         }
       });;
 
