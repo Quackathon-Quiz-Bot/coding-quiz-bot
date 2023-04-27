@@ -69,7 +69,8 @@ client.on("messageCreate", async (message) => {
         { name: "\u200B", value: "\u200B" },
         {
           name: "Commands",
-          value: `!quiz - Generates a new trivia question for you to answer. \n\n!interview - Generates a question about algorithms or data structures you may be asked about in an interview.\n\n!question - Generates a coding challenge for you to complete (like Codewars or Leetcode!) `,
+          value: `!quiz - Generates a new trivia question for you to answer. \n\n!interview - Generates a question about algorithms or data structures you may be asked about in an interview.\n\n!question - Generates a coding challenge for you to complete (like Codewars or Leetcode!) \n\n!myScore - Can be used to see what your score is for the current week or your lifetime score. \n\n!leaderboards - Shows the top ten coding masters based on their score for answering questions. Resets weekly.`,
+          
         },
         { name: "\u200B", value: "\u200B" },
         {
@@ -457,6 +458,137 @@ client.on("messageCreate", (message2) => {
         }
       }
     }
+  }
+});
+
+/* ////////////////////////////////////  */
+/* //     SCOREBOARD COMMANDS        //  */
+/* ///////////////////////////////////// */
+
+// Above, in the question functions still need API update call to increase the users score. Take parameters user and # of points?
+
+// Get "my" score. Any user can type !myscore, their username will be parsed from the message and sent through an api call to the database to get their current score and lifetime score. Then the embed will be sent back with both scores and some specific feedback based on their lifetime score.
+client.on("messageCreate", async (message) => {
+  // Ignore messages from bots
+  if (message.author.bot) return;
+
+  // Check if message starts with the prefix
+  if (message.content.startsWith("!myscore")) {
+    const user = message.author.username;
+
+    //API Fetch Here!!!!!!!!!!!!!!
+
+    // async function getScores (u) {
+    //   try {
+    //     const options = {
+    //       headers: { "Content-Type": "application/json" },
+    //     };
+    //     const response = await fetch (`URL GOES HERE!/scores/${u}`, options); // Edit URL once API routes are set up.
+    //     const userScores = await response.json();
+    //     return userScores; // => should return an object {current_score: x, lifetime_score: y}
+    //   } catch (error) {
+    //     throw error;
+    //   }
+    // }
+
+    // const userScores = await getScores(user)
+
+    const userScores = { current_score: 15, lifetime_score: 9001 }; // Hard coded until database is set up
+
+    let feedback;
+
+    // Function generates specific feedback for the user based on their lifetime Score.
+    async function generateFeedback(lifetimeScore) {
+      if (lifetimeScore > 9000) {
+        feedback = "It's over 9000!!!!!";
+      } else if (lifetimeScore === 69 || lifetimeScore === 420) {
+        feedback = "Nice!";
+      } else if (lifetimeScore === 666) {
+        feedback = "😈";
+      } else if (lifetimeScore === 0 || lifetimeScore === undefined) {
+        feedback =
+          "Answer your first !quiz question to start tallying a score.";
+      } else {
+        feedback = "Keep up the great work!";
+      }
+    }
+
+    await generateFeedback(userScores.lifetime_score);
+
+    // Defines the message that will be sent with the users scores.
+    const userScoreEmbed = new EmbedBuilder()
+      .setColor("#ffce47")
+      .setTitle(`${user}'s Score`)
+      .setDescription(
+        `Your score for this week is ${userScores.current_score}. \n\nYour lifetime score is ${userScores.lifetime_score}. \n\n${feedback}`
+      );
+
+    //Sends the message.
+    await message.channel.send({
+      embeds: [userScoreEmbed],
+    });
+  }
+});
+
+// Any user can type !leaderboards, an api call to the database will be made to get their current top 10 scorers. Then the embed will be sent back with a leaderboard showing the top 10 users and their scores for the week.
+client.on("messageCreate", async (message) => {
+  // Ignore messages from bots
+  if (message.author.bot) return;
+
+  // Check if message starts with the prefix
+  if (message.content.startsWith("!leaderboards")) {
+    //API Fetch Here!!!!!!!!!!!!!!
+
+    // async function getLeaderboards () {
+    //   try {
+    //     const options = {
+    //       headers: { "Content-Type": "application/json" },
+    //     };
+    //     const response = await fetch (`URL GOES HERE!/scores/topten`, options); // Edit URL once API routes are set up.
+    //     const leaderboards = await response.json();
+    //     return leaderboards; // => should return an array of objects maybe? [{user: username, current_score: x}, {user: username, current_score: y}...] As long as the array is in order by score from highest to lowest I can make it work on the "front-end".
+    //   } catch (error) {
+    //     throw error;
+    //   }
+    // }
+
+    // const leaderboards = await getLeaderboards()
+
+    // Hard coded until database is set up!
+    const leaderboards = [
+      { user: "Pumba", current_score: 37 },
+      { user: "Mufasa", current_score: 31 },
+      { user: "Scar", current_score: 30 },
+      { user: "Timon", current_score: 25 },
+      { user: "Simba", current_score: 22 },
+      { user: "Nala", current_score: 19 },
+      { user: "Zazu", current_score: 17 },
+      { user: "Shenzi", current_score: 11 },
+      { user: "Banzai", current_score: 5 },
+      { user: "Ed", current_score: 0 },
+    ];
+
+    // Defines the message that will be sent with the users scores.
+    const leaderboardEmbed = new EmbedBuilder()
+      .setColor("#ffce47")
+      .setTitle(`Leaderboard`)
+      .setDescription(`🎉 Congratulations top 10!!! 🎉 **
+          \n #1 ${leaderboards[0].user} with ${leaderboards[0].current_score} points
+          \n #2 ${leaderboards[1].user} with ${leaderboards[1].current_score} points
+          \n #3 ${leaderboards[2].user} with ${leaderboards[2].current_score} points
+          \n #4 ${leaderboards[3].user} with ${leaderboards[3].current_score} points
+          \n #5 ${leaderboards[4].user} with ${leaderboards[4].current_score} points
+          \n #6 ${leaderboards[5].user} with ${leaderboards[5].current_score} points
+          \n #7 ${leaderboards[6].user} with ${leaderboards[6].current_score} points
+          \n #8 ${leaderboards[7].user} with ${leaderboards[7].current_score} points
+          \n #9 ${leaderboards[8].user} with ${leaderboards[8].current_score} points
+          \n #10 ${leaderboards[9].user} with ${leaderboards[9].current_score}  points       **
+          \n\nKeep up the great work everyone!`);
+
+    //Sends the message.
+    await message.channel.send({
+      embeds: [leaderboardEmbed],
+    });
   }
 });
 
