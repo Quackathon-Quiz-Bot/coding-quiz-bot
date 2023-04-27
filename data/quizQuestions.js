@@ -147,12 +147,62 @@ htmlQuestions = [
   },
   {
     question:
-      "What is the correct format for inserting comments in a CSS file?",
+      "What is the correct format for inserting comments in an HTML file?",
     correctAnswer: "<!-- comment -->",
     allAnswers: [
       "// comment //", //javascript comment
       "/* comment */", //css comment
       "# comment", //python comment
+    ],
+  },
+  {
+    question:
+      "Which HTML attribute indicates that a form input field must be filled with a value before submission?",
+    correctAnswer: "required",
+    allAnswers: [
+      "validate", 
+      "mandatory", 
+      "important", 
+    ],
+  },
+  {
+    question:
+      "Which of the following is not a valid HTML event attribute?",
+    correctAnswer: "ontransitionend",
+    allAnswers: [
+      "onmouseover", 
+      "oninput", 
+      "onresize", 
+    ],
+  },
+  {
+    question:
+      "Which of the following elements is used to define a container for navigation links?",
+    correctAnswer: "<nav>",
+    allAnswers: [
+      "<header>", 
+      "<footer>", 
+      "<section>", 
+    ],
+  },
+  {
+    question:
+      "What is the purpose of the 'defer' attribute in a script tag?",
+    correctAnswer: "The script should not be executed until the page has finished parsing.",
+    allAnswers: [
+      "The script should be executed as soon as it is loaded.", 
+      "The script should be loaded asynchronously.", 
+      "The script should be executed before the page is loaded.", 
+    ],
+  },
+  {
+    question:
+      "Which of the following is not a valid value for the 'type' attribute in an input tag?",
+    correctAnswer: "boolean",
+    allAnswers: [
+      "email", 
+      "password", 
+      "date", 
     ],
   },
 ];
