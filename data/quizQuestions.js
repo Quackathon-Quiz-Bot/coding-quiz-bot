@@ -95,6 +95,66 @@ htmlQuestions = [
       "<link url='http://www.url.com'>This is a link!</link>",
     ],
   },
+  {
+    question:
+      "Which of the following HTML elements can be used to make a numbered list?",
+    correctAnswer: "<ol>",
+    allAnswers: [
+      "<ul>",
+      "<li>",
+      "<list>",
+    ],
+  },
+  {
+    question:
+      "Which of the following HTML elements can be used to make a bulleted list?",
+    correctAnswer: "<ul>",
+    allAnswers: [
+      "<ol>",
+      "<li>",
+      "<list>",
+    ],
+  },
+  {
+    question:
+      "Which of the following HTML elements can be used to make a toggle-able checkbox?",
+    correctAnswer: "<input type='checkbox'>",
+    allAnswers: [
+      "<checkbox>",
+      "<input type='check'>",
+      "<input type='selection'>",
+    ],
+  },
+  {
+    question:
+      "How would format an HTML element for inserting an image?",
+    correctAnswer: "<img src='image.png'/>",
+    allAnswers: [
+      "<img href='image.png'/>",
+      "<image src='image.png'/>",
+      "<image href='image.png'/>",
+    ],
+  },
+  {
+    question:
+      "What is the purpose of the aria-label attribute?",
+    correctAnswer: "Labels an HTML element for accessibility.",
+    allAnswers: [
+      "It's used to add background music to a web page.",
+      "It sets the font style of text on a webpage.",
+      "It controls the animation speed of a webpage element.",
+    ],
+  },
+  {
+    question:
+      "What is the correct format for inserting comments in a CSS file?",
+    correctAnswer: "<!-- comment -->",
+    allAnswers: [
+      "// comment //", //javascript comment
+      "/* comment */", //css comment
+      "# comment", //python comment
+    ],
+  },
 ];
 
 cssQuestions = [
