@@ -55,6 +55,46 @@ htmlQuestions = [
       "<script rel='script.js'></script>",
     ],
   },
+  {
+    question:
+      "Which of the following HTML elements would be the largest heading?",
+    correctAnswer: "<h1>",
+    allAnswers: [
+      "<h6>",
+      "<head>",
+      "<header size='large'>",
+    ],
+  },
+  {
+    question:
+      "How would you link your scripts to your HTML (in the HTML file)?",
+    correctAnswer: "<script src='script.js'></script>",
+    allAnswers: [
+      "<link src='script.js'></script>",
+      "<link rel='script.js'></script>",
+      "<script rel='script.js'></script>",
+    ],
+  },
+  {
+    question:
+      "Which of the following HTML elements can be used to insert a line break?",
+    correctAnswer: "<br />",
+    allAnswers: [
+      "<hr />",
+      "<break />",
+      "<linebreak />",
+    ],
+  },
+  {
+    question:
+      "How would format an HTML element for a hyperlink?",
+    correctAnswer: "<a href='http://www.url.com'>This is a link!</a>",
+    allAnswers: [
+      "<a url='http://www.url.com'>This is a link!</a>",
+      "<link href='http://www.url.com'>This is a link!</link>",
+      "<link url='http://www.url.com'>This is a link!</link>",
+    ],
+  },
 ];
 
 cssQuestions = [
