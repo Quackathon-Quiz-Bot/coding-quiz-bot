@@ -45,6 +45,51 @@ algorithmicQuestions = [
     correctAnswer: "Recursive function",
     allAnswers: ["Return", "Reserve function", "While Loop"],
   },
+
+  {
+    question: "What is a hash table?",
+    correctAnswer: "A data structure that maps keys to values.",
+    allAnswers: [
+      "A table that stores only hash values.",
+      "A table where only hash browns can be stored.",
+      "A table where hashish is legally consumed.",
+    ],
+  },
+  {
+    question: "What is a callback function?",
+    correctAnswer:
+      "A function that is passed as an argument to another function and is executed when the first function is completed.",
+    allAnswers: [
+      "A function that calls itself",
+      "A function that is used to format text",
+      "A function that returns a value to another function.",
+    ],
+  },
+  {
+    question: "What is a git repository?",
+    correctAnswer: "A directory where a git project is stored.",
+    allAnswers: [
+      "A type of file format",
+      "A program for managing databases",
+      "A way to delete files permanently.",
+    ],
+  },
+
+  {
+    question:
+      "const arr = [1, 2, 3]; arr.forEach(function () {console.log('hi!');})",
+    correctAnswer: "Hi!",
+    allAnswers: ["[1,2,3]", "1, 2, 3", "{[1,2,3], [1,2,3], [1,2,3]}"],
+  },
+  {
+    question: "What does the map() function return in JavaScript?",
+    correctAnswer: "A new array with each element mapped to a new value",
+    allAnswers: [
+      "A boolean value indicating if a condition is met.",
+      "An object containing the original array's elements.",
+      "A string representation of the mapped array's elements.",
+    ],
+  },
 ];
 
 dataStructureQuestions = [
@@ -81,9 +126,9 @@ dataStructureQuestions = [
       "How can you filter out specific values from an object and return them as an array using Object.values in JavaScript? Provide an example.",
     correctAnswer: "Object.values(obj).filter(val => val !== 'specificValue')",
     allAnswers: [
-      "A function for mapping through an array",
-      "An API request to the server",
-      "A mathematical problem",
+      "Use Object.entries() instead of Object.values()",
+      "Call the filter() method on the object directly",
+      "Use Object.keys() instead of Object.values()",
     ],
   },
 
@@ -96,42 +141,42 @@ dataStructureQuestions = [
   {
     question: "Concatenate two arrays:",
     correctAnswer: "arr1.concat(arr2)",
-    allAnswers: ["array.length", "arr.lgth", "arr.pop"],
+    allAnswers: ["arr1.push(arr2)", "arr1.join(arr2)", "arr1.add(arr2)"],
   },
 
   {
     question: "Check if an array includes a certain value:",
     correctAnswer: "arr.includes(value);",
-    allAnswers: ["array.length", "arr.lgth", "arr.pop"],
+    allAnswers: [
+      "arr.include(value)",
+      "arr.contains(value)",
+      "arr.check(value)",
+    ],
   },
 
   {
     question: "Find the index of an element in an array:",
     correctAnswer: "arr.indexOf(elem);",
-    allAnswers: ["array.length", "arr.lgth", "arr.pop"],
+    allAnswers: ["arr.elemIndex(elem);", "arr.find(elem);", "arr.pos(elem);"],
   },
 
   {
     question: "Convert a string to lowercase:",
     correctAnswer: "str.toLowerCase();",
-    allAnswers: ["array.length", "arr.lgth", "arr.pop"],
+    allAnswers: ["str.caseChange();", "str.upperCase();", "str.toLower();"],
   },
   {
     question: "Remove falsy values from an array:",
     correctAnswer: "arr.filter(Boolean);",
-    allAnswers: [
-      "A function for mapping through an array",
-      "An API request to the server",
-      "A mathematical problem",
-    ],
+    allAnswers: ["arr.removeFalsy();", "arr.excludeFalsy();", "arr.cleanse();"],
   },
   {
     question: " Sort an array of objects by a property value:",
     correctAnswer: "arr.sort((a, b) => a.prop - b.prop);",
     allAnswers: [
-      "A function for mapping through an array",
-      "An API request to the server",
-      "A mathematical problem",
+      "arr.sortBy(a.prop, b.prop);",
+      "arr.orderBy(a.prop, b.prop);",
+      "arr.arrangeBy(a.prop, b.prop);",
     ],
   },
 ];
