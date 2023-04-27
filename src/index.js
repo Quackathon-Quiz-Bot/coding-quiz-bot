@@ -70,7 +70,6 @@ client.on("messageCreate", async (message) => {
         {
           name: "Commands",
           value: `!quiz - Generates a new trivia question for you to answer. \n\n!interview - Generates a question about algorithms or data structures you may be asked about in an interview.\n\n!question - Generates a coding challenge for you to complete (like Codewars or Leetcode!) \n\n!myScore - Can be used to see what your score is for the current week or your lifetime score. \n\n!leaderboards - Shows the top ten coding masters based on their score for answering questions. Resets weekly.`,
-          
         },
         { name: "\u200B", value: "\u200B" },
         {
@@ -312,10 +311,10 @@ client.on("messageCreate", (message2) => {
       .setPlaceholder("Subjects")
       .addOptions(
         new StringSelectMenuOptionBuilder()
-          .setLabel("algorithmicQuestions")
+          .setLabel("Algorithms")
           .setValue("algorithmicQuestions"),
         new StringSelectMenuOptionBuilder()
-          .setLabel("dataStructureQuestions")
+          .setLabel("Data Structures")
           .setValue("dataStructureQuestions")
       );
 
@@ -326,10 +325,14 @@ client.on("messageCreate", (message2) => {
 
     //This is the function that generates the subject selection menu.
     async function openSubjectSelect() {
-      await message2.reply({
-        content: "What subject would you like a question about?",
+      const embeddedSubjectSelect = new EmbedBuilder()
+        .setColor("#ffce47")
+        .setTitle("Which subject would you like a question for?");
+      await message2.channel.send({
+        embeds: [embeddedSubjectSelect],
         components: [rowInterview],
       });
+
       const collector3 = message2.channel.createMessageComponentCollector({
         time: 30000, // Time limit for user interaction in milliseconds
       });
