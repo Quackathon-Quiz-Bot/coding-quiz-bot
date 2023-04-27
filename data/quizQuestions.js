@@ -26,6 +26,184 @@ htmlQuestions = [
       "<!DOCTYPE> declaration in HTML is not necessary and can be omitted",
       "<!DOCTYPE> declaration in HTML sets the background color of the web page",
     ],
+  }, {
+    question:
+      "How would you link your stylesheet to your HTML (in the HTML file)?",
+    correctAnswer: "<link rel='stylesheet' href='style.css'>",
+    allAnswers: [
+      "<link rel='stylesheet'>",
+      "<link rel='style.css'>",
+      "<link rel='style.css' href='stylesheet'>",
+    ],
+  },
+  {
+    question: "Where in the HTML file would you link your stylesheet(s)?",
+    correctAnswer: "In the <head> section",
+    allAnswers: [
+      "In the <body> section",
+      "Outside of the <html> section",
+      "Inside the <html> section, but outside of <head> and <body>",
+    ],
+  },
+  {
+    question:
+      "How would you link your scripts to your HTML (in the HTML file)?",
+    correctAnswer: "<script src='script.js'></script>",
+    allAnswers: [
+      "<link src='script.js'></script>",
+      "<link rel='script.js'></script>",
+      "<script rel='script.js'></script>",
+    ],
+  },
+  {
+    question:
+      "Which of the following HTML elements would be the largest heading?",
+    correctAnswer: "<h1>",
+    allAnswers: [
+      "<h6>",
+      "<head>",
+      "<header size='large'>",
+    ],
+  },
+  {
+    question:
+      "How would you link your scripts to your HTML (in the HTML file)?",
+    correctAnswer: "<script src='script.js'></script>",
+    allAnswers: [
+      "<link src='script.js'></script>",
+      "<link rel='script.js'></script>",
+      "<script rel='script.js'></script>",
+    ],
+  },
+  {
+    question:
+      "Which of the following HTML elements can be used to insert a line break?",
+    correctAnswer: "<br />",
+    allAnswers: [
+      "<hr />",
+      "<break />",
+      "<linebreak />",
+    ],
+  },
+  {
+    question:
+      "How would format an HTML element for a hyperlink?",
+    correctAnswer: "<a href='http://www.url.com'>This is a link!</a>",
+    allAnswers: [
+      "<a url='http://www.url.com'>This is a link!</a>",
+      "<link href='http://www.url.com'>This is a link!</link>",
+      "<link url='http://www.url.com'>This is a link!</link>",
+    ],
+  },
+  {
+    question:
+      "Which of the following HTML elements can be used to make a numbered list?",
+    correctAnswer: "<ol>",
+    allAnswers: [
+      "<ul>",
+      "<li>",
+      "<list>",
+    ],
+  },
+  {
+    question:
+      "Which of the following HTML elements can be used to make a bulleted list?",
+    correctAnswer: "<ul>",
+    allAnswers: [
+      "<ol>",
+      "<li>",
+      "<list>",
+    ],
+  },
+  {
+    question:
+      "Which of the following HTML elements can be used to make a toggle-able checkbox?",
+    correctAnswer: "<input type='checkbox'>",
+    allAnswers: [
+      "<checkbox>",
+      "<input type='check'>",
+      "<input type='selection'>",
+    ],
+  },
+  {
+    question:
+      "How would format an HTML element for inserting an image?",
+    correctAnswer: "<img src='image.png'/>",
+    allAnswers: [
+      "<img href='image.png'/>",
+      "<image src='image.png'/>",
+      "<image href='image.png'/>",
+    ],
+  },
+  {
+    question:
+      "What is the purpose of the aria-label attribute?",
+    correctAnswer: "Labels an HTML element for accessibility.",
+    allAnswers: [
+      "It's used to add background music to a web page.",
+      "It sets the font style of text on a webpage.",
+      "It controls the animation speed of a webpage element.",
+    ],
+  },
+  {
+    question:
+      "What is the correct format for inserting comments in an HTML file?",
+    correctAnswer: "<!-- comment -->",
+    allAnswers: [
+      "// comment //", //javascript comment
+      "/* comment */", //css comment
+      "# comment", //python comment
+    ],
+  },
+  {
+    question:
+      "Which HTML attribute indicates that a form input field must be filled with a value before submission?",
+    correctAnswer: "required",
+    allAnswers: [
+      "validate", 
+      "mandatory", 
+      "important", 
+    ],
+  },
+  {
+    question:
+      "Which of the following is not a valid HTML event attribute?",
+    correctAnswer: "ontransitionend",
+    allAnswers: [
+      "onmouseover", 
+      "oninput", 
+      "onresize", 
+    ],
+  },
+  {
+    question:
+      "Which of the following elements is used to define a container for navigation links?",
+    correctAnswer: "<nav>",
+    allAnswers: [
+      "<header>", 
+      "<footer>", 
+      "<section>", 
+    ],
+  },
+  {
+    question:
+      "What is the purpose of the 'defer' attribute in a script tag?",
+    correctAnswer: "The script should not be executed until the page has finished parsing.",
+    allAnswers: [
+      "The script should be executed as soon as it is loaded.", 
+      "The script should be loaded asynchronously.", 
+      "The script should be executed before the page is loaded.", 
+    ],
+  },
+  {
+    question:
+      "Which of the following is not a valid value for the 'type' attribute in an input tag?",
+    correctAnswer: "boolean",
+    allAnswers: [
+      "email", 
+      "password", 
+      "date", 
+    ],
   },
 ];
 
