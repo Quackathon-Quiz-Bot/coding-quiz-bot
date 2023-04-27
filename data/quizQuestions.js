@@ -26,6 +26,34 @@ htmlQuestions = [
       "<!DOCTYPE> declaration in HTML is not necessary and can be omitted",
       "<!DOCTYPE> declaration in HTML sets the background color of the web page",
     ],
+  }, {
+    question:
+      "How would you link your stylesheet to your HTML (in the HTML file)?",
+    correctAnswer: "<link rel='stylesheet' href='style.css'>",
+    allAnswers: [
+      "<link rel='stylesheet'>",
+      "<link rel='style.css'>",
+      "<link rel='style.css' href='stylesheet'>",
+    ],
+  },
+  {
+    question: "Where in the HTML file would you link your stylesheet(s)?",
+    correctAnswer: "In the <head> section",
+    allAnswers: [
+      "In the <body> section",
+      "Outside of the <html> section",
+      "Inside the <html> section, but outside of <head> and <body>",
+    ],
+  },
+  {
+    question:
+      "How would you link your scripts to your HTML (in the HTML file)?",
+    correctAnswer: "<script src='script.js'></script>",
+    allAnswers: [
+      "<link src='script.js'></script>",
+      "<link rel='script.js'></script>",
+      "<script rel='script.js'></script>",
+    ],
   },
 ];
 
