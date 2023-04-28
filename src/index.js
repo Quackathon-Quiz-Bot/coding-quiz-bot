@@ -278,7 +278,8 @@ client.on("messageCreate", async (message) => {
             .setColor("#ff0000")
             .setTitle("Incorrect!")
             .setDescription(
-              `${interaction2.user.username} you selected the wrong answer... The correct answer is ${quizQuestion.correctAnswer}. Keep studying you got this!`
+              `${interaction2.user.username} you selected the wrong answer...
+               "${quizQuestion.correctAnswer}", is the correct answer.`
             );
 
           await interaction2.reply({
