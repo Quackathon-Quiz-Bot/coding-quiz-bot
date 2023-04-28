@@ -551,7 +551,7 @@ javascriptQuestions = [
   {
     question: "What does the 'this' keyword refer to in JavaScript?",
     correctAnswer:
-      "The 'this' keyword refers to the object that the function belongs to or is called on.",
+      "The 'this' keyword refers to the object that the function belongs to",
     allAnswers: [
       "The 'this' keyword refers to the parent function of the current function.",
       "The 'this' keyword refers to the global object of the current execution context.",
