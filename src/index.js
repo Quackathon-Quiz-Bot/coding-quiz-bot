@@ -273,7 +273,7 @@ client.on("messageCreate", async (message) => {
             embeds: [successEmbed],
           });
         } else {
-          //If the chosen answer and the correct answer match, send positive feedback.
+          //If the chosen answer and the correct answer don't match, send negative feedback.
           const failureEmbed = new EmbedBuilder()
             .setColor("#ff0000")
             .setTitle("Incorrect!")
@@ -303,7 +303,12 @@ client.on("messageCreate", (message2) => {
 
   //Check if message2 starts with the prefix !interview
   if (message2.content.startsWith("!interview")) {
-    message2.channel.send("Generating an interview question...");
+    const generatingInterviewEmbed = new EmbedBuilder()
+      .setColor("#ffce47")
+      .setTitle("It's Trivia Time!")
+      .setDescription(`Generating an interview question...`);
+
+    message2.channel.send({ embeds: [generatingInterviewEmbed] });
 
     //Defining the menu for selecting a subject
     //If adding a set of questions for another subject here is where you will add the option for it in the subject selection menu.
@@ -347,8 +352,12 @@ client.on("messageCreate", (message2) => {
 
       //After 30 seconds, if a subject isn't selected the request times out.
       collector3.on("end", (collected) => {
+        const timeoutEmbed = new EmbedBuilder()
+        .setColor("#ffce47")
+        .setTitle(`Request timed out...`);
+
         if (collected.size === 0) {
-          message2.reply("Request timed out...");
+          message2.channel.send({ embeds: [timeoutEmbed] });
         }
       });
     }
@@ -373,11 +382,12 @@ client.on("messageCreate", (message2) => {
         interviewQuestions = await dataStructureQuestions[randomIndexInterview];
         console.log(interviewQuestions);
       }
+
+      // Sends the interview question after a subject is selected
       openInterviewQuestionMenu(interaction3, interviewQuestions);
     }
 
-    //Defining the buttons for the interview answers
-
+// Function for shuffling the array of answer choices
     function shuffleInterviewArray(array) {
       const shuffled = [...array];
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -387,16 +397,16 @@ client.on("messageCreate", (message2) => {
       return shuffled;
     }
 
-    //Function for sending the message to the discord channel.
+      // Function for sending the question and answer choices to the discord channel starting a collector to listen for the answer choice, and sending feedback after the question is answered.
     async function openInterviewQuestionMenu(interaction3, interviewQuestions) {
       const shuffledAnswers = shuffleInterviewArray([
         ...interviewQuestions.allAnswers,
         interviewQuestions.correctAnswer,
       ]);
       const choice1 = new ButtonBuilder()
-        .setCustomId(`${shuffledAnswers[0]}`)
-        .setLabel(`${shuffledAnswers[0]}`)
-        .setStyle(ButtonStyle.Secondary);
+      .setCustomId(`${shuffledAnswers[0]}`)
+      .setLabel(`${shuffledAnswers[0]}`)
+      .setStyle(ButtonStyle.Secondary);
       const choice2 = new ButtonBuilder()
         .setCustomId(`${shuffledAnswers[1]}`)
         .setLabel(`${shuffledAnswers[1]}`)
@@ -409,52 +419,66 @@ client.on("messageCreate", (message2) => {
         .setCustomId(`${shuffledAnswers[3]}`)
         .setLabel(`${shuffledAnswers[3]}`)
         .setStyle(ButtonStyle.Secondary);
-
-      const interviewAnswerChoices = new ActionRowBuilder().addComponents(
-        choice1,
-        choice2,
-        choice3,
-        choice4
-      );
+        
+        const interviewAnswerChoices = new ActionRowBuilder().addComponents(
+          choice1,
+          choice2,
+          choice3,
+          choice4
+          );
+          
+      const embeddedInterviewQuestion = new EmbedBuilder()
+      .setColor("#ffce47")
+      .setTitle(`${interviewQuestions.question}`);
 
       const sentSubjectQuestion = await interaction3.reply({
-        content: `${interviewQuestions.question}`,
+        embeds: [embeddedInterviewQuestion],
         components: [interviewAnswerChoices],
       });
 
       const collector4 = sentSubjectQuestion.createMessageComponentCollector({
         componentType: ComponentType.Button,
-        time: 30000,
+        time: 30000, // Time limit for user interaction in milliseconds
       });
       collector4.on("collect", async (interaction4) => {
-        const selectedSubjectAnswer = interaction4.customId;
-        checkSubjectAnswer(selectedSubjectAnswer, interaction4);
-        collector4.stop();
+        const selectedSubjectAnswer = interaction4.customId; // The answer the user selected.
+        checkSubjectAnswer(selectedSubjectAnswer, interaction4); // Check to see if the answer the user selected is the correct answer choice.
+        collector4.stop(); //Ends the collector after the user has selected an answer.
       });
+
+      // After 30 seconds, if an answer isn't selected the request times out.
       collector4.on("end", (collected) => {
+        const timeoutEmbed = new EmbedBuilder()
+        .setColor("#ffce47")
+        .setTitle(`Request timed out...`);
+
         if (collected.size === 0) {
-          message2.reply("Request timed out...");
+          message2.channel.send({ embeds: [timeoutEmbed] });
         }
       });
 
+      //Function for checking whether the selected answer is correct and sending feedback accordingly.
       async function checkSubjectAnswer(
         selectedSubjectAnswer,
         interviewInteraction
       ) {
+        //If the chosen answer and the correct answer match, send positive feedback.
         if (selectedSubjectAnswer === interviewQuestions.correctAnswer) {
           const successEmbed = new EmbedBuilder()
             .setColor("#00ff00")
             .setTitle("Correct!")
-            .setDescription("You selected the correct answer!");
+            .setDescription(`Great job, ${interviewInteraction.user.username}! "${selectedSubjectAnswer}" was the correct answer!`);
 
           await interviewInteraction.reply({
             embeds: [successEmbed],
           });
         } else {
+          //If the chose answer and the correct answer don't match, send negative feedback.
           const failureEmbed = new EmbedBuilder()
             .setColor("#ff0000")
             .setTitle("Incorrect!")
-            .setDescription("You selected the wrong answer!");
+            .setDescription(`${interviewInteraction.user.username} you selected the wrong answer...
+            "${interviewQuestions.correctAnswer}", is the correct answer.`);
 
           await interviewInteraction.reply({
             embeds: [failureEmbed],
