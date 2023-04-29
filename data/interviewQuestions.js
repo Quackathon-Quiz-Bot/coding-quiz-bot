@@ -78,7 +78,7 @@ algorithmicQuestions = [
   {
     question:
       "const arr = [1, 2, 3]; arr.forEach(function () {console.log('hi!');})",
-    correctAnswer: "Hi!",
+    correctAnswer: "hi!",
     allAnswers: ["[1,2,3]", "1, 2, 3", "{[1,2,3], [1,2,3], [1,2,3]}"],
   },
   {
@@ -88,6 +88,80 @@ algorithmicQuestions = [
       "A boolean value indicating if a condition is met.",
       "An object containing the original array's elements.",
       "A string representation of the mapped array's elements.",
+    ],
+  },
+
+  {
+    question: "Write a function to reverse a string.",
+    correctAnswer: "str.split('').reverse().join('')",
+    allAnswers: [
+      "str.reverse()",
+      "str.split('').join()",
+      "str.split('').reverse().join('')",
+    ],
+  },
+  {
+    question: "Write a function to return the highest value in an array.",
+    correctAnswer: "Math.max(...arr)",
+    allAnswers: ["arr.max()", "Math.min(...arr)", "Math.max(...arr)"],
+  },
+  {
+    question: "Write a function to remove all vowels from a string.",
+    correctAnswer: "str.replace(/[aeiou]/gi, '')",
+    allAnswers: [
+      "str.replaceAll(/[aeiou]/g, '')",
+      "str.split('').filter(c => !'aeiou'.includes(c)).join('')",
+      "str.replace(/[aeiou]/gi, '')",
+    ],
+  },
+  {
+    question:
+      "Write a function to calculate the sum of the even numbers in an array.",
+    correctAnswer:
+      "arr.filter(num => num % 2 === 0).reduce((acc, num) => acc + num, 0)",
+    allAnswers: [
+      "arr.filter(num => num % 2 !== 0).reduce((acc, num) => acc + num, 0)",
+      "arr.filter(num => num % 2 === 0).reduce((acc, num) => acc * num, 1)",
+      "arr.filter(num => num % 2 === 0).reduce((acc, num) => acc + num, 0)",
+    ],
+  },
+  {
+    question: "Write a function to find the second largest number in an array.",
+    correctAnswer: "arr.sort((a, b) => b - a)[1]",
+    allAnswers: [
+      "arr.sort((a, b) => a - b)[1]",
+      "arr.sort((a, b) => b - a)[0]",
+      "arr.sort((a, b) => a - b)[arr.length - 2]",
+    ],
+  },
+  {
+    question: "What is a dynamic data structure in computer science?",
+    correctAnswer:
+      "A data structure that can grow or shrink in size during the execution of a program.",
+    allAnswers: [
+      "A data structure that has a fixed size.",
+      "A data structure that is used to store data in a database.",
+      "A data structure that follows the Last-In-First-Out (LIFO) principle.",
+    ],
+  },
+  {
+    question: "What is a brute-force algorithm in computer science?",
+    correctAnswer:
+      "An approach to that involves trying every possibility for a solution.",
+    allAnswers: [
+      "An algorithm that recursively breaks down a problem into subproblems.",
+      "An algorithm that uses heuristics to find approximate solutions.",
+      "An algorithm that applies a set of rules or procedures to solve a problem.",
+    ],
+  },
+  {
+    question:
+      "What is the difference between a stack and a queue data structure?",
+    correctAnswer: "Stack: LIFO, Queue: FIFO",
+    allAnswers: [
+      "Stack: FIFO, Queue: LIFO",
+      "Stack: used for caching, Queue: used for sorting",
+      "Stack: used for sorting, Queue: used for caching",
     ],
   },
 ];
