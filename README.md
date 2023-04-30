@@ -1,7 +1,7 @@
 # coding-quiz-bot
 This project contains a Discord bot that generates coding questions to keep users skills sharp, built using discord.js. This project was developed for a #DearJuniorDev channel Quackathon. Currently this bot is capabale of generating a quiz question about HTML, CSS, Javascript, Algorithms, or Data Structures on command, evaluate whether you have chosen the correct answer, and provide feedback based on the answer the user selected. 
 
-Future goals for this app include
+Future goals for this app include:
 - Expanding the app to cover more topics by adding question libraries for other coding languages (python, SQL, java, C++, etc). 
 - Creating a simple database for storing users scores with API routes that can:
   - return a users current(weekly) and lifetime scores as well as their percent correct
@@ -13,7 +13,11 @@ Future goals for this app include
 
 **Check out the issues tab to see how you can contribute to the continued development of this app or make your own suggestions for updates and changes!**
 
-![image](https://user-images.githubusercontent.com/113493052/235358293-c15b1857-8daa-4c08-b259-2700ecd26f5e.png)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/113493052/235358293-c15b1857-8daa-4c08-b259-2700ecd26f5e.png" width="600" />
+  </p>
+
+<!-- ![image](https://user-images.githubusercontent.com/113493052/235358293-c15b1857-8daa-4c08-b259-2700ecd26f5e.png) -->
 
 ## Bot Commands
 
