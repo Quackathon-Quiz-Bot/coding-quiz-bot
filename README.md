@@ -1,8 +1,32 @@
 # coding-quiz-bot
-This project contains a Discord bot that generates coding questions to keep users skills sharp, built using discord.js. 
+This project contains a Discord bot that generates coding questions to keep users skills sharp, built using discord.js. This project was developed for a #DearJuniorDev channel Quackathon. Currently this bot is capabale of generating a quiz question about HTML, CSS, Javascript, Algorithms, or Data Structures on command, evaluate whether you have chosen the correct answer, and provide feedback based on the answer the user selected. 
 
+Future goals for this app include
+- Expanding the app to cover more topics by adding question libraries for other coding languages (python, SQL, java, C++, etc). 
+- Creating a simple database for storing users scores with API routes that can:
+  - return a users current(weekly) and lifetime scores as well as their percent correct
+  - return an array of the users with the top 10 scores for the week
+  - check if a user is already in the database and add them if they are not
+  - add points when a user gets a correct answer
+  - tally incorrect answers to adjust percent correct when a user gets an incorrect answer
+- Finishing functionality on a LeetCode style question generator that uses jest testing to confirm whether the user submitted a valid function in response. 
+
+**Check out the issues tab to see how you can contribute to the continued development of this app or make your own suggestions for updates and changes!**
 
 ![image](https://user-images.githubusercontent.com/113493052/235358293-c15b1857-8daa-4c08-b259-2700ecd26f5e.png)
+
+## Bot Commands
+
+**!quiz** - Generates a new trivia question for you to answer based on which language you would like a question about. 
+
+**!interview** - Generates a question about algorithms or data structures you may be asked about in an interview. 
+
+_Functions still in development._
+**!question** - Generates a coding challenge for you to complete (like codewars or LeetCode!)
+
+**!myScore** - Can be used to see what your score is for the current week or your lifetime score.
+
+**!leaderboards** - Shows the top ten coding masters based on their score for answering questions. Resets weekly.
 
 # Project Structure
 ```
