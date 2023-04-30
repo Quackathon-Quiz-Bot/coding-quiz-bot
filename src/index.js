@@ -171,14 +171,12 @@ client.on("messageCreate", async (message) => {
       if (option == "htmlQuestions") {
         const randomIndex = Math.floor(Math.random() * htmlQuestions.length);
         quizQuestion = await htmlQuestions[randomIndex];
-        console.log(quizQuestion, "line 110");
       }
 
       // CSS
       if (option == "cssQuestions") {
         const randomIndex = Math.floor(Math.random() * cssQuestions.length);
         quizQuestion = await cssQuestions[randomIndex];
-        console.log(quizQuestion);
       }
 
       // JavaScript
@@ -187,7 +185,6 @@ client.on("messageCreate", async (message) => {
           Math.random() * javascriptQuestions.length
         );
         quizQuestion = await javascriptQuestions[randomIndex];
-        console.log(quizQuestion);
       }
 
       // Sends the question after a language is selected
