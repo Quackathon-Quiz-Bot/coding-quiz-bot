@@ -58,3 +58,9 @@ _Functions still in development._
 - Install dependencies with `npm install`
 - Create a .env file following the instructions in the .env.sample file
 - Run the app using `npm run start`
+
+# Contribution Guidelines
+
+Make sure to keep your code clean, clear, and well commented so that it remains junior dev friendly!
+
+Use consistent code styling and run prettier before submitting your PR!
