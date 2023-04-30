@@ -11,7 +11,7 @@
 
 const evaluateSolution = (name, solution) => {
     // Load the question and test cases from the questions.json file
-    const questions = require('../data/questions.json');
+    const questions = require('../data/leetQuestions.json');
     const question = questions.find((question) => question.name === name);
 
     if (!question) {

@@ -9,7 +9,7 @@
 
 
 
-const questions = require('../data/questions.json');
+const questions = require('../data/leetQuestions.json');
 const evaluateSolution = require('../src/evaluateSolution');
 
 //Loop through the questions
