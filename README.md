@@ -26,6 +26,7 @@ Future goals for this app include:
 **!interview** - Generates a question about algorithms or data structures you may be asked about in an interview. 
 
 _Functions still in development._
+
 **!question** - Generates a coding challenge for you to complete (like codewars or LeetCode!)
 
 **!myScore** - Can be used to see what your score is for the current week or your lifetime score.
