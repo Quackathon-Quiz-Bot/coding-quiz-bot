@@ -1,18 +1,18 @@
 require("dotenv").config();
-const keepAlive= require('../server')
+const keepAlive= require('./server')
 
 // When adding a new question set, add it to the imports below.
 const {
   htmlQuestions,
   cssQuestions,
   javascriptQuestions,
-} = require("../data/quizQuestions");
+} = require("./data/quizQuestions");
 const {
   dataStructureQuestions,
   algorithmicQuestions,
-} = require("../data/interviewQuestions");
+} = require("./data/interviewQuestions");
 
-const questions = require("../data/leetQuestions.json").questions;
+const questions = require("./data/leetQuestions.json").questions;
 
 const {
   Client,
@@ -30,7 +30,7 @@ const {
   ComponentType,
 } = require("discord.js");
 
-const evaluateSolution = require("./evaluateSolution");
+const evaluateSolution = require("./src/evaluateSolution");
 
 const { spawn } = require("child_process");
 
