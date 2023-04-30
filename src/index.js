@@ -359,8 +359,8 @@ client.on("messageCreate", (message2) => {
       //After 30 seconds, if a subject isn't selected the request times out.
       collector3.on("end", (collected) => {
         const timeoutEmbed = new EmbedBuilder()
-        .setColor("#ffce47")
-        .setTitle(`Request timed out...`);
+          .setColor("#ffce47")
+          .setTitle(`Request timed out...`);
 
         if (collected.size === 0) {
           message2.channel.send({ embeds: [timeoutEmbed] });
@@ -393,7 +393,7 @@ client.on("messageCreate", (message2) => {
       openInterviewQuestionMenu(interaction3, interviewQuestions);
     }
 
-// Function for shuffling the array of answer choices
+    // Function for shuffling the array of answer choices
     function shuffleInterviewArray(array) {
       const shuffled = [...array];
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -403,16 +403,16 @@ client.on("messageCreate", (message2) => {
       return shuffled;
     }
 
-      // Function for sending the question and answer choices to the discord channel starting a collector to listen for the answer choice, and sending feedback after the question is answered.
+    // Function for sending the question and answer choices to the discord channel starting a collector to listen for the answer choice, and sending feedback after the question is answered.
     async function openInterviewQuestionMenu(interaction3, interviewQuestions) {
       const shuffledAnswers = shuffleInterviewArray([
         ...interviewQuestions.allAnswers,
         interviewQuestions.correctAnswer,
       ]);
       const choice1 = new ButtonBuilder()
-      .setCustomId(`${shuffledAnswers[0]}`)
-      .setLabel(`${shuffledAnswers[0]}`)
-      .setStyle(ButtonStyle.Secondary);
+        .setCustomId(`${shuffledAnswers[0]}`)
+        .setLabel(`${shuffledAnswers[0]}`)
+        .setStyle(ButtonStyle.Secondary);
       const choice2 = new ButtonBuilder()
         .setCustomId(`${shuffledAnswers[1]}`)
         .setLabel(`${shuffledAnswers[1]}`)
@@ -425,17 +425,17 @@ client.on("messageCreate", (message2) => {
         .setCustomId(`${shuffledAnswers[3]}`)
         .setLabel(`${shuffledAnswers[3]}`)
         .setStyle(ButtonStyle.Secondary);
-        
-        const interviewAnswerChoices = new ActionRowBuilder().addComponents(
-          choice1,
-          choice2,
-          choice3,
-          choice4
-          );
-          
+
+      const interviewAnswerChoices = new ActionRowBuilder().addComponents(
+        choice1,
+        choice2,
+        choice3,
+        choice4
+      );
+
       const embeddedInterviewQuestion = new EmbedBuilder()
-      .setColor("#ffce47")
-      .setTitle(`${interviewQuestions.question}`);
+        .setColor("#ffce47")
+        .setTitle(`${interviewQuestions.question}`);
 
       const sentSubjectQuestion = await interaction3.reply({
         embeds: [embeddedInterviewQuestion],
@@ -455,8 +455,8 @@ client.on("messageCreate", (message2) => {
       // After 30 seconds, if an answer isn't selected the request times out.
       collector4.on("end", (collected) => {
         const timeoutEmbed = new EmbedBuilder()
-        .setColor("#ffce47")
-        .setTitle(`Request timed out...`);
+          .setColor("#ffce47")
+          .setTitle(`Request timed out...`);
 
         if (collected.size === 0) {
           message2.channel.send({ embeds: [timeoutEmbed] });
@@ -473,7 +473,9 @@ client.on("messageCreate", (message2) => {
           const successEmbed = new EmbedBuilder()
             .setColor("#00ff00")
             .setTitle("Correct!")
-            .setDescription(`Great job, ${interviewInteraction.user.username}! "${selectedSubjectAnswer}" was the correct answer!`);
+            .setDescription(
+              `Great job, ${interviewInteraction.user.username}! "${selectedSubjectAnswer}" was the correct answer!`
+            );
 
           await interviewInteraction.reply({
             embeds: [successEmbed],
