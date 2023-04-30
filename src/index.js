@@ -69,7 +69,13 @@ client.on("messageCreate", async (message) => {
         { name: "\u200B", value: "\u200B" },
         {
           name: "Commands",
-          value: `!quiz - Generates a new trivia question for you to answer. \n\n!interview - Generates a question about algorithms or data structures you may be asked about in an interview.\n\n!question - Generates a coding challenge for you to complete (like Codewars or Leetcode!) \n\n!myScore - Can be used to see what your score is for the current week or your lifetime score. \n\n!leaderboards - Shows the top ten coding masters based on their score for answering questions. Resets weekly.`,
+          value: `
+          !quiz - Generates a new trivia question for you to answer. 
+          \n\n!interview - Generates a question about algorithms or data structures you may be asked about in an interview.
+          \n\n!question - Generates a coding challenge for you to complete (like codewars or LeetCode!) 
+          \n\n!myScore - Can be used to see what your score is for the current week or your lifetime score. 
+          \n\n!leaderboards - Shows the top ten coding masters based on their score for answering questions. Resets weekly.
+          `,
         },
         { name: "\u200B", value: "\u200B" },
         {
