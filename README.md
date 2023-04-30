@@ -59,6 +59,25 @@ _Functions still in development._
 - Create a .env file following the instructions in the .env.sample file
 - Run the app using `npm run start`
 
+# To Creata a 24-7 Deployment for the Bot on your Server
+
+- Make sure you have your Bot's token handy. 
+- Create an account on replit.com
+- Create a new Repl
+- Import the repository from GitHub using a node.js template. 
+  - The import may take a few minutes. 
+- On the left side under tools go to secrets. 
+  - Add a key called TOKEN with the value of the token of your discord bot. 
+  - Select "Add new secret". 
+- Hit the Run button. 
+  - It may take a while for Replit to install your npm packages. 
+- 24-7 Run Time:
+  - Turn the Always On option on Replit to Always on, or, 
+  - Go to UptimeRobot and register an account and log in. 
+    - Go to "+Add New Monitor". 
+    - Paste the replit URL into the form. 
+    - Click "Create Monitor". 
+
 # Contribution Guidelines
 
 Make sure to keep your code clean, clear, and well commented so that it remains junior dev friendly!
