@@ -74,7 +74,7 @@ client.on("messageCreate", async (message) => {
         { name: "\u200B", value: "\u200B" },
         {
           name: "Want to Contribute?",
-          value: `Info about open source contributions... \n\nCheck out the issues tab to get some ideas about how you can help improve the bot, or make your own suggestions!`,
+          value: `You can find the repository for this project at https://github.com/Quackathon-Quiz-Bot \n\nCheck out the issues tab to get some ideas about how you can help improve the bot, or make your own suggestions!`,
         }
       );
 
