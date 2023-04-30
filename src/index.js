@@ -1,4 +1,5 @@
 require("dotenv").config();
+const keepAlive= require('../server')
 
 // When adding a new question set, add it to the imports below.
 const {
@@ -70,10 +71,10 @@ client.on("messageCreate", async (message) => {
         {
           name: "Commands",
           value: `
-          !quiz - Generates a new trivia question for you to answer. 
+          !quiz - Generates a new trivia question for you to answer.
           \n\n!interview - Generates a question about algorithms or data structures you may be asked about in an interview.
-          \n\n!question - Generates a coding challenge for you to complete (like codewars or LeetCode!) 
-          \n\n!myScore - Can be used to see what your score is for the current week or your lifetime score. 
+          \n\n!question - Generates a coding challenge for you to complete (like codewars or LeetCode!)
+          \n\n!myScore - Can be used to see what your score is for the current week or your lifetime score.
           \n\n!leaderboards - Shows the top ten coding masters based on their score for answering questions. Resets weekly.
           `,
         },
@@ -746,5 +747,5 @@ const executeCode = (code) => {
     });
   });
 };
-
+keepAlive()
 client.login(process.env.TOKEN);
