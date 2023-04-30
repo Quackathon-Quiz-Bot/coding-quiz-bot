@@ -9,7 +9,7 @@
 
 
 
-const questions = require('../questions.json');
+const questions = require('../data/questions.json');
 const evaluateSolution = require('../src/evaluateSolution');
 
 //Loop through the questions

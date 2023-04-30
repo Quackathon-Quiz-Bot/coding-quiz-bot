@@ -11,7 +11,7 @@ const {
   algorithmicQuestions,
 } = require("../data/interviewQuestions");
 
-const questions = require("../questions.json").questions;
+const questions = require("../data/questions.json").questions;
 
 const {
   Client,
