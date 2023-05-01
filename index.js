@@ -1,5 +1,6 @@
 require("dotenv").config();
 const keepAlive= require('./server')
+const Sequelize = require('sequelize')
 
 // When adding a new question set, add it to the imports below.
 const {
@@ -17,6 +18,8 @@ const questions = require("./data/leetQuestions.json").questions;
 const {
   Client,
   IntentsBitField,
+  GatewayIntentBits,
+  Events,
   InteractionCollector,
   ActionRowBuilder,
   StringSelectMenuBuilder,
@@ -40,7 +43,32 @@ const client = new Client({
     IntentsBitField.Flags.GuildMembers,
     IntentsBitField.Flags.GuildMessages,
     IntentsBitField.Flags.MessageContent,
+    GatewayIntentBits.Guilds,
   ],
+});
+
+const sequelize = new Sequelize(`database`, `user`, `password`, {
+  host: 'localhost',
+  dialect: 'sqlite',
+  logging: false,
+  storage: 'database.sqlite',
+});
+
+const Scores = sequelize.define(`scores`, {
+  user: {
+    type: Sequelize.STRING,
+    unique: true,
+  }, 
+  points: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+  },
+});
+
+client.once(Events.ClientReady,() =>{
+  Scores.sync();
+  console.log(`Logged in as ${client.user}`);
 });
 
 const prefix = "!";
