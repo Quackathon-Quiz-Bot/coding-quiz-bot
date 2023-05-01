@@ -41,9 +41,12 @@ _Functions still in development._
 │   ├── quizWuestions.js
 ├── src
 │   ├── evaluateSolution.js    -> Helper function for leetcode style question evaluation
-│   ├── index.js    -> Main bot functionality
 ├── tests
 │   ├── evaluateSolution.tests.js    -> Helper function for leetcode style question evaluation
+├── index.js    -> Main bot functionality
+├── server.js    -> Keeps the bot running
+├── replit.nix
+├── .replit
 ├── .env.sample    -> sample .env file
 ├── package.json
 ├── README.md
